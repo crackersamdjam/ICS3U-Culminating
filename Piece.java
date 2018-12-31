@@ -1,25 +1,25 @@
 package sample;
 public class Piece{
 
+    static final int white = 0, black = 1;
+
+
+    /*
+    Attributes of the class start here
+     */
+
     String type;
     int colour;
     // white = 0, black = 1
     // numbers can be XOR'd
 
-    int x, y;
-    // column, row
-    // file, rank
-    // in chess notation, x should be A - H
-
     boolean exist;
     // when captured, exist = false
 
     // Constructor
-    public Piece(String type, int colour, int x, int y, boolean exist){
+    public Piece(String type, int colour, boolean exist){
         this.type = type;
         this.colour = colour;
-        this.x = x;
-        this.y = y;
         this.exist = exist;
     }
 
@@ -28,10 +28,10 @@ public class Piece{
 
     }
 
-    public boolean isValid(int newX, int newY){
+    public boolean isValid(int x, int y, int newX, int newY){
 
         //same spot
-        if(newX == this.x && newY == this.y)
+        if(newX == x && newY == y)
             return false;
 
         switch(type){
@@ -67,17 +67,17 @@ public class Piece{
 
                 
             case "Pawn":
-                if(colour == 0){
+                if(colour == white){
                     //white
                     if(newX == x && newY == y+1){
-                        if(newY == 7)
+                        if(newY == 8)
                             promotion(this);
                         return true;
                     }
                 }
                 else{
                     if(newX == x && newY == y-1){
-                        if(newY == 0)
+                        if(newY == 1)
                             promotion(this);
                         return true;
                     }
