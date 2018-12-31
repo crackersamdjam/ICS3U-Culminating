@@ -1,2 +1,2 @@
 # ICS3U Culminating
-Culminating Project
+Remember that board is 1-indexed
