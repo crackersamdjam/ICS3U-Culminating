@@ -3,6 +3,7 @@ public class Board{
 
     static Piece[][] board = new Piece[9][9];
     static boolean hasPieceSelected = false;
+    static int oldX, oldY;
     static Piece empty = new Piece("null", -1, false);
     static final int white = 0, black = 1;
 
@@ -41,12 +42,30 @@ public class Board{
     static void click(int x, int y){
         System.out.println("Stalin says do stuff\n");
 
-        if(hasPieceSelected == false){
-            
-        }
-        else{
+        if(hasPieceSelected){
             //moving to this square
 
+            if(!board[x][y].isValid(oldX, oldY, x, y)){
+                System.out.println("Invalid move, piece has been deselected");
+                hasPieceSelected = false;
+                return;
+            }
+
+            // check if legal
+
+            // check if check
+
+            // move the piece
+
+        }
+        else{
+            if(board[x][y].type == "null"){
+                System.out.println("nothing to select");
+                return;
+            }
+            hasPieceSelected = true;
+            oldX = x;
+            oldY = y;
         }
     }
 }
