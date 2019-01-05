@@ -1,0 +1,17 @@
+.root {
+    -fx-background-color: white;
+}
+.label1 {
+    -fx-font-size: 12;
+}
+.vbox {
+    -fx-border-color: #2e8b57;
+    -fx-border-width: 2px;
+    -fx-padding: 10;
+    -fx-spacing: 8;
+}
+}
+#hbox-custom {
+    -fx-background-radius: 5.0;
+    -fx-padding: 8;
+}
