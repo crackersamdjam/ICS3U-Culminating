@@ -21,22 +21,47 @@ public class Main extends Application {
     //Static Board board = new Board();
     @Override
     public void start(Stage primaryStage) {
+        /**
         GridPane board_vis = new GridPane();
         for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j ++) {
+            for (int j = 0; j < 8; j++) {
                 StackPane square = new StackPane();
-                String colour ;
+                String colour;
                 if ((i + j) % 2 == 0) {
                     colour = "beige";
                 } else {
                     colour = "brown";
                 }
-                square.setStyle("-fx-background-color: "+colour+";");
+                square.setStyle("-fx-background-color: " + colour + ";");
                 board_vis.add(square, j, i);
             }
+
+        }**/
+
+        Button[] btns = new Button[64];
+
+        GridPane board_button = new GridPane();
+        int k = 0;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Button button_square = new Button();
+                String colour;
+                if ((i + j) % 2 == 0) {
+                    colour = "beige";
+                } else {
+                    colour = "brown";
+                }
+                button_square.setStyle("-fx-background-color: " + colour + ";");
+                button_square.setPrefWidth(50);
+                button_square.setPrefHeight(50);
+                board_button.add(button_square, j, i);
+                btns[k] = button_square;
+            }
+
         }
+
         TextField myTextField = new TextField();
-        HBox hbox = new HBox(board_vis);
+        HBox hbox = new HBox(board_button);
         hbox.setPrefWidth(400);
         hbox.setPrefHeight(400);
         VBox vbox = new VBox(hbox);
@@ -46,11 +71,12 @@ public class Main extends Application {
 
 
         for (int i = 0; i < 8; i++) {
-            board_vis.getColumnConstraints().add(new ColumnConstraints(50, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
-            board_vis.getRowConstraints().add(new RowConstraints(50, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true));
+            board_button.getColumnConstraints().add(new ColumnConstraints(50, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
+            board_button.getRowConstraints().add(new RowConstraints(50, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true));
         }
         //primaryStage.setScene(scene);
         Scene scene = new Scene(vbox, 650, 450);
+        primaryStage.setTitle("Chess");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -58,4 +84,23 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+/**
+
+    private Pane getGrid() {
+        int i = 0;
+        GridPane gridPane = new GridPane();
+        for(Button b : btns) {
+            // do something with your button
+            // maybe add an EventListener or something
+            gridPane.add(b, i*(i+(int)b.getWidth()), 0);
+            i++;
+        }
+        return gridPane;
+    }
+    private void initBtnsArray() {
+        for (int i = 0; i < btns.length; i++) {
+            btns[i] = new Button("Button-" + i);
+        }
+    } **/
 }
