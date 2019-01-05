@@ -4,6 +4,8 @@ import javafx.event.*;
 import javafx.application.Application;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
+import javafx.animation.AnimationTimer;
+import javafx.scene.canvas.GraphicsContext;
 
 import javafx.geometry.*;
 import javafx.scene.Scene;
@@ -13,13 +15,19 @@ import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import javax.xml.soap.Text;
 
 public class Main extends Application {
 
     //Static Board board = new Board();
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    double WIDTH = screenSize.getWidth() - 80;
+    double HEIGHT = screenSize.getHeight() - 80;
     @Override
+
     public void start(Stage primaryStage) {
         /**
         GridPane board_vis = new GridPane();
@@ -56,9 +64,12 @@ public class Main extends Application {
                 button_square.setPrefHeight(50);
                 board_button.add(button_square, j, i);
                 btns[k] = button_square;
+
+
             }
 
         }
+
 
         TextField myTextField = new TextField();
         HBox hbox = new HBox(board_button);
@@ -79,10 +90,36 @@ public class Main extends Application {
         primaryStage.setTitle("Chess");
         primaryStage.setScene(scene);
         primaryStage.show();
+        primaryStage.setResizable(false);
+/**
+        String colour_sel = "red";
+        for(int l = 0; l < btns.length; l++){
+            btns[l].setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                    btns[l].setStyle("-fx-background-color: " + colour_sel + ";");
+                }
+            });
+        }
+ **/
+/**
+        new AnimationTimer() {
+            @Override public void handle(long currentNanoTime) {
+
+
+
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    // Do nothing
+                }
+            }
+        }.start();**/
     }
+
 
     public static void main(String[] args) {
         launch(args);
+
     }
 
 /**
