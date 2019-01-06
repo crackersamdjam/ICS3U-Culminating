@@ -1,11 +1,19 @@
 package sample;
+
+/*
+all processing happens here
+has direct access to board
+ */
+
 public class Board{
 
     static Piece[][] board = new Piece[9][9];
-    static boolean hasPieceSelected = false;
+    static boolean hasPieceSelected = false, enPassant = false;
     static int oldX, oldY;
     static Piece empty = new Piece("null", -1, false);
     static final int white = 0, black = 1;
+
+    static int turn = white;
 
     // initialize stating position
     public Board(){
@@ -39,28 +47,71 @@ public class Board{
         }
     }
 
+    static Piece get(int x, int y){
+        return board[x][y];
+    }
+
+    static void setEnPassant(){
+        enPassant = true;
+    }
+
+    //0 = white, 1 = black
+    static boolean isCheck(int colour){
+        int x = -1, y = -1;
+        for(int i = 1; i <= 8; i++){
+            for(int j = 1; j <= 8; j++){
+                if(board[i][j].colour == colour && board[i][j].type.equals("King")){
+                    x = i;
+                    y = j;
+                    break;
+                }
+            }
+        }
+        for(int i = 1; i <= 8; i++){
+            for(int j = 1; j <= 8; j++){
+                if(board[i][j].isValid(i, j, x, y))
+                    return false;
+            }
+        }
+        return true;
+    }
+
     static void click(int x, int y){
         System.out.println("Stalin says do stuff\n");
 
         if(hasPieceSelected){
             //moving to this square
 
+            //check if valid move
             if(!board[x][y].isValid(oldX, oldY, x, y)){
                 System.out.println("Invalid move, piece has been deselected");
                 hasPieceSelected = false;
                 return;
             }
 
-            // check if legal
+            //check if move is legal (jumps over pieces)
+            if(!board[x][y].isLegal(oldX, oldY, x, y)){
+                System.out.println("Illegal move");
+                hasPieceSelected = false;
+                return;
+            }
 
-            // check if check
-
-            // move the piece
+            // check if move results in check
+            if(isCheck(turn)){
+                System.out.println("Results in check, move reset");
+                hasPieceSelected = false;
+                return;
+            }
+            // move the piece (reset en passant)
 
         }
         else{
-            if(board[x][y].type == "null"){
+            if(board[x][y].type.equals("null")){
                 System.out.println("nothing to select");
+                return;
+            }
+            if(board[x][y].colour != turn){
+                System.out.println("Wrong coloured piece");
                 return;
             }
             hasPieceSelected = true;
@@ -69,7 +120,3 @@ public class Board{
         }
     }
 }
-/*
-all processing happens here
-has direct access to board
- */
