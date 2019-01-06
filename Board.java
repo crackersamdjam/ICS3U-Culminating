@@ -1,10 +1,5 @@
 package sample;
 
-/*
-all processing happens here
-has direct access to board
- */
-
 public class Board{
 
     static Piece[][] board = new Piece[9][9];
@@ -55,7 +50,6 @@ public class Board{
         enPassant = true;
     }
 
-    //0 = white, 1 = black
     static boolean isCheck(int colour){
         int x = -1, y = -1;
         for(int i = 1; i <= 8; i++){
@@ -76,20 +70,20 @@ public class Board{
         return true;
     }
 
+
     static void click(int x, int y){
-        System.out.println("Stalin says do stuff\n");
 
         if(hasPieceSelected){
-            //moving to this square
+            // moving to this square
 
-            //check if valid move
+            // check if valid move
             if(!board[x][y].isValid(oldX, oldY, x, y)){
                 System.out.println("Invalid move, piece has been deselected");
                 hasPieceSelected = false;
                 return;
             }
 
-            //check if move is legal (jumps over pieces)
+            // check if move is legal (jumps over pieces)
             if(!board[x][y].isLegal(oldX, oldY, x, y)){
                 System.out.println("Illegal move");
                 hasPieceSelected = false;

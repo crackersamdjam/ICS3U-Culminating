@@ -141,12 +141,124 @@ public class Piece{
         switch(this.type){
 
             case "Rook":
+                if(x == newX){
+                    if(newY > y){
+                        for(int i = y+1; i < newY; i++)
+                            if(Board.get(x, i).exist)
+                                return false;
+                    }
+                    else{
+                        for(int i = y-1; i > y; i--)
+                            if(Board.get(x, i).exist)
+                                return false;
+                    }
+                }
+                else{
+                    if(newX > x){
+                        for(int i = x+1; i < newX; i++)
+                            if(Board.get(i, y).exist)
+                                return false;
+                    }
+                    else{
+                        for(int i = x-1; i < newX; i--)
+                            if(Board.get(i, y).exist)
+                                return false;
+                    }
+                }
                 break;
 
             case "Bishop":
+                if(newX > x){
+                    if(newY > y){
+                        for(int i = x+1, j = y+1; i < newX; i++, j++){
+                            if(Board.get(i, j).exist)
+                                return false;
+                        }
+                    }
+                    else{
+                        for(int i = x+1, j = y-1; i < newX; i++, j--){
+                            if(Board.get(i, j).exist)
+                                return false;
+                        }
+                    }
+                }
+                else{
+                    if(newY > y){
+                        for(int i = x-1, j = y+1; i > newX; i--, j++){
+                            if(Board.get(i, j).exist)
+                                return false;
+                        }
+                    }
+                    else{
+                        for(int i = x-1, j = y-1; i > newX; i--, j--){
+                            if(Board.get(i, j).exist)
+                                return false;
+                        }
+                    }
+                }
                 break;
 
             case "Queen":
+
+                if(x == newX || y == newY){
+                    // same code as for rook
+
+                    if(x == newX){
+                        if(newY > y){
+                            for(int i = y+1; i < newY; i++)
+                                if(Board.get(x, i).exist)
+                                    return false;
+                        }
+                        else{
+                            for(int i = y-1; i > y; i--)
+                                if(Board.get(x, i).exist)
+                                    return false;
+                        }
+                    }
+                    else{
+                        if(newX > x){
+                            for(int i = x+1; i < newX; i++)
+                                if(Board.get(i, y).exist)
+                                    return false;
+                        }
+                        else{
+                            for(int i = x-1; i < newX; i--)
+                                if(Board.get(i, y).exist)
+                                    return false;
+                        }
+                    }
+                }
+                else{
+                    // same code as for bishop
+                    if(newX > x){
+                        if(newY > y){
+                            for(int i = x+1, j = y+1; i < newX; i++, j++){
+                                if(Board.get(i, j).exist)
+                                    return false;
+                            }
+                        }
+                        else{
+                            for(int i = x+1, j = y-1; i < newX; i++, j--){
+                                if(Board.get(i, j).exist)
+                                    return false;
+                            }
+                        }
+                    }
+                    else{
+                        if(newY > y){
+                            for(int i = x-1, j = y+1; i > newX; i--, j++){
+                                if(Board.get(i, j).exist)
+                                    return false;
+                            }
+                        }
+                        else{
+                            for(int i = x-1, j = y-1; i > newX; i--, j--){
+                                if(Board.get(i, j).exist)
+                                    return false;
+                            }
+                        }
+                    }
+                }
                 break;
 
                 default:;
