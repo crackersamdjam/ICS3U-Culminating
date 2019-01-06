@@ -30,6 +30,9 @@ public class Main extends Application {
 
     public void start(Stage primaryStage) {
         /**
+         * Ignore this section
+         * 
+         * 
         GridPane board_vis = new GridPane();
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -85,35 +88,31 @@ public class Main extends Application {
             board_button.getColumnConstraints().add(new ColumnConstraints(50, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
             board_button.getRowConstraints().add(new RowConstraints(50, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true));
         }
+
+
         //primaryStage.setScene(scene);
         Scene scene = new Scene(vbox, 650, 450);
         primaryStage.setTitle("Chess");
+
+        primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
-        primaryStage.setResizable(false);
-/**
-        String colour_sel = "red";
-        for(int l = 0; l < btns.length; l++){
-            btns[l].setOnAction(new EventHandler<ActionEvent>() {
-                @Override public void handle(ActionEvent e) {
-                    btns[l].setStyle("-fx-background-color: " + colour_sel + ";");
-                }
-            });
-        }
- **/
-/**
-        new AnimationTimer() {
-            @Override public void handle(long currentNanoTime) {
 
-
-
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    // Do nothing
+        new AnimationTimer() {  //this is the gay part that doesnt work
+            @Override
+            public void handle(long now) {
+                String colour_sel = "red";
+                for (int l = 0; l < btns.length; l++) {
+                    int finalL = l;
+                    btns[l].setOnAction(e -> btns[finalL].setStyle("-fx-background-color: " + colour_sel + ";"));
                 }
             }
-        }.start();**/
+        }.start();
+
+/**
+
+ **/
+
     }
 
 
@@ -123,6 +122,8 @@ public class Main extends Application {
     }
 
 /**
+ * 
+ * Ignore this section
 
     private Pane getGrid() {
         int i = 0;
