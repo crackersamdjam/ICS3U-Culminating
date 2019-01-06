@@ -20,46 +20,27 @@ import java.awt.Toolkit;
 
 import javax.xml.soap.Text;
 
-public class Main extends Application {
+public class Main extends Application{
 
-    //Static Board board = new Board();
+    static Board board = new Board();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     double WIDTH = screenSize.getWidth() - 80;
     double HEIGHT = screenSize.getHeight() - 80;
+
     @Override
-
-    public void start(Stage primaryStage) {
-        /**
-         * Ignore this section
-         * 
-         * 
-        GridPane board_vis = new GridPane();
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                StackPane square = new StackPane();
-                String colour;
-                if ((i + j) % 2 == 0) {
-                    colour = "beige";
-                } else {
-                    colour = "brown";
-                }
-                square.setStyle("-fx-background-color: " + colour + ";");
-                board_vis.add(square, j, i);
-            }
-
-        }**/
+    public void start(Stage primaryStage){
 
         Button[] btns = new Button[64];
 
         GridPane board_button = new GridPane();
         int k = 0;
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 8; j++){
                 Button button_square = new Button();
                 String colour;
-                if ((i + j) % 2 == 0) {
+                if((i + j) % 2 == 0){
                     colour = "beige";
-                } else {
+                }else{
                     colour = "brown";
                 }
                 button_square.setStyle("-fx-background-color: " + colour + ";");
@@ -67,12 +48,8 @@ public class Main extends Application {
                 button_square.setPrefHeight(50);
                 board_button.add(button_square, j, i);
                 btns[k] = button_square;
-
-
             }
-
         }
-
 
         TextField myTextField = new TextField();
         HBox hbox = new HBox(board_button);
@@ -84,61 +61,35 @@ public class Main extends Application {
         HBox.setHgrow(myTextField, Priority.ALWAYS);
 
 
-        for (int i = 0; i < 8; i++) {
+        for(int i = 0; i < 8; i++){
             board_button.getColumnConstraints().add(new ColumnConstraints(50, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
             board_button.getRowConstraints().add(new RowConstraints(50, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true));
         }
 
-
-        //primaryStage.setScene(scene);
         Scene scene = new Scene(vbox, 650, 450);
-        primaryStage.setTitle("Chess");
+        primaryStage.setTitle("Sovetsky Soyuz");
 
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        new AnimationTimer() {  //this is the gay part that doesnt work
+        AnimationTimer timer = new AnimationTimer(){  //this is the gay part that doesnt work
             @Override
-            public void handle(long now) {
+            public void handle(long now){
                 String colour_sel = "red";
-                for (int l = 0; l < btns.length; l++) {
+                for(int l = 0; l < btns.length; l++){
                     int finalL = l;
-                    btns[l].setOnAction(e -> btns[finalL].setStyle("-fx-background-color: " + colour_sel + ";"));
+                    //btns[l].setOnAction(e -> btns[finalL].setStyle("-fx-background-color: " + colour_sel + ";"));
                 }
             }
-        }.start();
+        };
+        timer.start();
 
-/**
-
- **/
+        primaryStage.setScene(scene);
+        primaryStage.show();
 
     }
-
-
-    public static void main(String[] args) {
+    public static void main(String[] args){
         launch(args);
-
     }
-
-/**
- * 
- * Ignore this section
-
-    private Pane getGrid() {
-        int i = 0;
-        GridPane gridPane = new GridPane();
-        for(Button b : btns) {
-            // do something with your button
-            // maybe add an EventListener or something
-            gridPane.add(b, i*(i+(int)b.getWidth()), 0);
-            i++;
-        }
-        return gridPane;
-    }
-    private void initBtnsArray() {
-        for (int i = 0; i < btns.length; i++) {
-            btns[i] = new Button("Button-" + i);
-        }
-    } **/
 }
