@@ -22,16 +22,24 @@ import javax.xml.soap.Text;
 
 public class Main extends Application{
 
-    //static Board board = new Board();
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    double WIDTH = screenSize.getWidth() - 80;
-    double HEIGHT = screenSize.getHeight() - 80;
+    static Button[][] btns = new Button[8][8];
+    public static void setColour (int i, int j){
+        btns[i][j].setStyle("-fx-background-color: " + "red" + ";");
+    }//end method
+    public static void rmColour (int i, int j){
+        String colour;
+        if((i + j) % 2 == 0){
+            colour = "beige";
+        }else{
+            colour = "brown";
+        }
+        btns[i][j].setStyle("-fx-background-color: " + colour + ";");
+
+    }//end method
+    static Board board = new Board();
 
     @Override
     public void start(Stage primaryStage){
-
-        Button[] btns = new Button[64];
-
         GridPane board_button = new GridPane();
         int k = 0;
         for(int i = 0; i < 8; i++){
@@ -47,10 +55,11 @@ public class Main extends Application{
                 button_square.setPrefWidth(50);
                 button_square.setPrefHeight(50);
                 board_button.add(button_square, j, i);
-                btns[k] = button_square;
-                int finalK = k;
-                btns[k].setOnAction(e -> btns[finalK].setStyle("-fx-background-color: " + "red" + ";"));
-                k++;
+                btns[i][j] = button_square;
+                int finalI = i + 1;
+                int finalJ = j + 1;
+
+                btns[i][j].setOnAction(e -> Board.click(finalI, finalJ));
 
             }
         }
@@ -60,24 +69,21 @@ public class Main extends Application{
         hbox.setPrefWidth(400);
         hbox.setPrefHeight(400);
         VBox vbox = new VBox(hbox);
-
         hbox.getChildren().add(myTextField);
         HBox.setHgrow(myTextField, Priority.ALWAYS);
-
 
         for(int i = 0; i < 8; i++){
             board_button.getColumnConstraints().add(new ColumnConstraints(50, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
             board_button.getRowConstraints().add(new RowConstraints(50, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true));
         }
 
-        Scene scene = new Scene(vbox, 650, 450);
-        primaryStage.setTitle("Sovetsky Soyuz");
-
+        Scene scene = new Scene(vbox, 650, 400);
+        primaryStage.setTitle("Shahmati");
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        AnimationTimer timer = new AnimationTimer(){  //this is the gay part that doesnt work
+        AnimationTimer timer = new AnimationTimer(){
             @Override
             public void handle(long now){
 
