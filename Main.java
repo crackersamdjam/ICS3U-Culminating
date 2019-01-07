@@ -22,7 +22,7 @@ import javax.xml.soap.Text;
 
 public class Main extends Application{
 
-    static Board board = new Board();
+    //static Board board = new Board();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     double WIDTH = screenSize.getWidth() - 80;
     double HEIGHT = screenSize.getHeight() - 80;
@@ -48,6 +48,10 @@ public class Main extends Application{
                 button_square.setPrefHeight(50);
                 board_button.add(button_square, j, i);
                 btns[k] = button_square;
+                int finalK = k;
+                btns[k].setOnAction(e -> btns[finalK].setStyle("-fx-background-color: " + "red" + ";"));
+                k++;
+
             }
         }
 
@@ -76,11 +80,7 @@ public class Main extends Application{
         AnimationTimer timer = new AnimationTimer(){  //this is the gay part that doesnt work
             @Override
             public void handle(long now){
-                String colour_sel = "red";
-                for(int l = 0; l < btns.length; l++){
-                    int finalL = l;
-                    //btns[l].setOnAction(e -> btns[finalL].setStyle("-fx-background-color: " + colour_sel + ";"));
-                }
+
             }
         };
         timer.start();
