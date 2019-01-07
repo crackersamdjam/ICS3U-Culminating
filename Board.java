@@ -100,7 +100,12 @@ public class Board{
                 hasPieceSelected = false;
                 return;
             }
-            // move the piece (reset en passant)
+            // move the piece (reset en passant too)
+
+            board[x][y] = board[oldX][oldY];
+            board[oldX][oldY] = empty;
+            // this works
+            
 
         }
         else{
