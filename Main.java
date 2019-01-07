@@ -23,10 +23,16 @@ import javax.xml.soap.Text;
 public class Main extends Application{
 
     static Button[][] btns = new Button[8][8];
-    public static void setColour (int i, int j){
+    public static void setColour (int j, int i){
+        i--;
+        i = 7-i;
+        j--;
         btns[i][j].setStyle("-fx-background-color: " + "red" + ";");
     }//end method
-    public static void rmColour (int i, int j){
+    public static void rmColour (int j, int i){
+        i--;
+        i = 7-i;
+        j--;
         String colour;
         if((i + j) % 2 == 0){
             colour = "beige";
@@ -41,7 +47,6 @@ public class Main extends Application{
     @Override
     public void start(Stage primaryStage){
         GridPane board_button = new GridPane();
-        int k = 0;
         for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
                 Button button_square = new Button();
@@ -56,10 +61,11 @@ public class Main extends Application{
                 button_square.setPrefHeight(50);
                 board_button.add(button_square, j, i);
                 btns[i][j] = button_square;
-                int finalI = i + 1;
-                int finalJ = j + 1;
+                int finalI = 7-i+1;
+                int finalJ = j+1;
+                // sketchy but works
 
-                btns[i][j].setOnAction(e -> Board.click(finalI, finalJ));
+                btns[i][j].setOnAction(e -> Board.click(finalJ, finalI));
 
             }
         }

@@ -70,21 +70,25 @@ public class Board{
         return true;
     }
 
-
     static void click(int x, int y){
+
+        System.out.println("click " + x + " " + y);
 
         if(hasPieceSelected){
             // moving to this square
 
+            // rm color
+            Main.rmColour(oldX, oldY);
+
             // check if valid move
-            if(!board[x][y].isValid(oldX, oldY, x, y)){
+            if(!board[oldX][oldY].isValid(oldX, oldY, x, y)){
                 System.out.println("Invalid move, piece has been deselected");
                 hasPieceSelected = false;
                 return;
             }
 
             // check if move is legal (jumps over pieces)
-            if(!board[x][y].isLegal(oldX, oldY, x, y)){
+            if(!board[oldX][oldY].isLegal(oldX, oldY, x, y)){
                 System.out.println("Illegal move");
                 hasPieceSelected = false;
                 return;
@@ -111,6 +115,7 @@ public class Board{
             hasPieceSelected = true;
             oldX = x;
             oldY = y;
+            Main.setColour(x, y);
         }
     }
 }
