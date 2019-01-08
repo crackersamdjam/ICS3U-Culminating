@@ -2,6 +2,8 @@ package sample;
 import javafx.scene.Group;
 import javafx.event.*;
 import javafx.application.Application;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.animation.AnimationTimer;
@@ -65,8 +67,8 @@ public class Main extends Application{
                     colour = "brown";
                 }
                 button_square.setStyle("-fx-background-color: " + colour + ";");
-                button_square.setPrefWidth(50);
-                button_square.setPrefHeight(50);
+                button_square.setPrefWidth(80);
+                button_square.setPrefHeight(80);
                 board_button.add(button_square, j, i);
                 btns[i][j] = button_square;
                 int finalI = 7-i+1;
@@ -74,27 +76,66 @@ public class Main extends Application{
                 // sketchy but works
                 btns[i][j].setOnAction(e -> Board.click(finalJ, finalI));
 
-
             }
         }
 
+        Image rw = new Image(getClass().getResourceAsStream("Rook_white.png"));
+        btns[7][0].setGraphic(new ImageView(rw));
+        btns[7][7].setGraphic(new ImageView(rw));
+        Image kw = new Image(getClass().getResourceAsStream("Knight_white.png"));
+        btns[7][1].setGraphic(new ImageView(kw));
+        btns[7][6].setGraphic(new ImageView(kw));
+        Image bw = new Image(getClass().getResourceAsStream("Bishop_white.png"));
+        btns[7][2].setGraphic(new ImageView(bw));
+        btns[7][5].setGraphic(new ImageView(bw));
+        Image Qw = new Image(getClass().getResourceAsStream("Queen_white.png"));
+        btns[7][3].setGraphic(new ImageView(Qw));
+        Image Kw = new Image(getClass().getResourceAsStream("King_white.png"));
+        btns[7][4].setGraphic(new ImageView(Kw));
+
+        Image pw = new Image(getClass().getResourceAsStream("Pawn_white.png"));
+        for (int i = 0; i <=7; i++){
+            btns[6][i].setGraphic(new ImageView(pw));
+        }
+
+        Image rb = new Image(getClass().getResourceAsStream("Rook_black.png"));
+        btns[0][0].setGraphic(new ImageView(rb));
+        btns[0][7].setGraphic(new ImageView(rb));
+        Image kb = new Image(getClass().getResourceAsStream("Knight_black.png"));
+        btns[0][1].setGraphic(new ImageView(kb));
+        btns[0][6].setGraphic(new ImageView(kb));
+        Image bb = new Image(getClass().getResourceAsStream("Bishop_black.png"));
+        btns[0][2].setGraphic(new ImageView(bb));
+        btns[0][5].setGraphic(new ImageView(bb));
+        Image Qb = new Image(getClass().getResourceAsStream("Queen_black.png"));
+        btns[0][3].setGraphic(new ImageView(Qb));
+        Image Kb = new Image(getClass().getResourceAsStream("King_black.png"));
+        btns[0][4].setGraphic(new ImageView(Kb));
+
+        Image pb = new Image(getClass().getResourceAsStream("Pawn_black.png"));
+        for (int i = 0; i <=7; i++){
+            btns[1][i].setGraphic(new ImageView(pb));
+        }
+
+
         TextField myTextField = new TextField();
         HBox hbox = new HBox(board_button);
-        hbox.setPrefWidth(400);
-        hbox.setPrefHeight(400);
+        hbox.setPrefWidth(520);
+        hbox.setPrefHeight(520);
         VBox vbox = new VBox(hbox);
         //.getChildren().add(myTextField);
         //HBox.setHgrow(myTextField, Priority.ALWAYS);
 
 
         for(int i = 0; i < 8; i++){
-            board_button.getColumnConstraints().add(new ColumnConstraints(50, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
-            board_button.getRowConstraints().add(new RowConstraints(50, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true));
+            board_button.getColumnConstraints().add(new ColumnConstraints(80, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
+            board_button.getRowConstraints().add(new RowConstraints(80, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true));
         }
 
-        Scene scene = new Scene(vbox, 650, 400);
+        Scene scene = new Scene(vbox, 1000, 640);
         primaryStage.setTitle("Shahmati");
         primaryStage.setResizable(false);
+
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -113,5 +154,9 @@ public class Main extends Application{
     }
     public static void main(String[] args){
         launch(args);
+    }
+
+    public static void movePiece(int x, int y, int oldX, int oldY){
+
     }
 }
