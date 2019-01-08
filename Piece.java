@@ -2,11 +2,9 @@ package sample;
 public class Piece{
 
     static final int white = 0, black = 1;
+    static boolean[] king = {true, true}, queen = {true, true};
+    // white castle kingside, queenside, black ", " "
 
-
-    /*
-    Attributes of the class start here
-     */
 
     String type;
     int colour;
@@ -29,6 +27,46 @@ public class Piece{
 
     private void promotion(Piece piece){
 
+    }
+
+    // 0 queen, 1 king
+    public static void castleOp(int colour, boolean side){
+        if(!side){
+            queen[colour] = false;
+        }
+        else{
+            king[colour] = false;
+        }
+    }
+
+    public boolean isCastle(int x, int y, int newX, int newY){
+        if(!type.equals("King")){
+            return false;
+        }
+        int ty = colour == white ? 1 : 8;
+        if(y == ty && newY == ty && x == 5){
+
+            // castle queenside
+            if(newX == 3 && queen[colour]){
+
+                //must be empty between rook and king
+                for(int i = 2; i < 5; i++){
+                    if(Board.get(i, ty).exist)
+                        return false;
+                }
+                return true;
+            }
+            // castle kingside
+            else if(newX == 7 && king[colour]){
+
+                for(int i = 6; i <= 7; i++){
+                    if(Board.get(i, ty).exist)
+                        return false;
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean isValid(int x, int y, int newX, int newY){

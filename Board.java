@@ -71,6 +71,15 @@ public class Board{
         }
         return true;
     }
+    static boolean isCheck(int x, int y){
+        for(int i = 1; i <= 8; i++){
+            for(int j = 1; j <= 8; j++){
+                if(board[i][j].isValid(i, j, x, y))
+                    return false;
+            }
+        }
+        return true;
+    }
 
     static void click(int x, int y){
         String letter = "";
@@ -108,20 +117,41 @@ public class Board{
             // rm color
             Main.rmColour(oldX, oldY);
 
-            // check if valid move
-            if(!board[oldX][oldY].isValid(oldX, oldY, x, y)){
-                System.out.println("Invalid move, piece has been deselected");
-                textUpdate = "Invalid move, piece has been deselected";
-                hasPieceSelected = false;
-                return;
-            }
 
-            // check if move is legal (jumps over pieces)
-            if(!board[oldX][oldY].isLegal(oldX, oldY, x, y)){
-                System.out.println("Illegal move");
-                textUpdate = "Illegal move";
-                hasPieceSelected = false;
-                return;
+            if(board[oldX][oldY].isCastle(oldX, oldY, x, y)){
+                if(x > oldX){
+                    for(int i = oldX; i <= x; i++){
+                        if(isCheck(i, y)){
+                            System.out.println("no castle");
+                            return;
+                        }
+                    }
+                }
+                else{
+                    for(int i = oldX; i >= x; i--){
+                        if(isCheck(i, y)){
+                            System.out.println("no castle");
+                            return;
+                        }
+                    }
+                }
+            }
+            else{
+                // check if valid move
+                if(!board[oldX][oldY].isValid(oldX, oldY, x, y)){
+                    System.out.println("Invalid move, piece has been deselected");
+                    textUpdate = "Invalid move, piece has been deselected";
+                    hasPieceSelected = false;
+                    return;
+                }
+
+                // check if move is legal (jumps over pieces)
+                if(!board[oldX][oldY].isLegal(oldX, oldY, x, y)){
+                    System.out.println("Illegal move");
+                    textUpdate = "Illegal move";
+                    hasPieceSelected = false;
+                    return;
+                }
             }
 
             // check if move results in check
@@ -137,6 +167,26 @@ public class Board{
             board[oldX][oldY] = empty;
             // this works
 
+            Main.movePiece(x, y, oldX, oldY);
+            turn ^= 1;
+
+            // reset castling
+            if(oldX == 1 && oldY == 1)
+                Piece.castleOp(white, false);
+            else if(oldX == 8 && oldY == 1)
+                Piece.castleOp(white, true);
+            else if(oldX == 1 && oldY == 8)
+                Piece.castleOp(black, false);
+            else if(oldX == 8 && oldY == 8)
+                Piece.castleOp(black, true);
+            else if(oldX == 5 && oldY == 1){
+                Piece.castleOp(white, false);
+                Piece.castleOp(white, true);
+            }
+            else if(oldX == 5 && oldY == 8){
+                Piece.castleOp(black, false);
+                Piece.castleOp(black, true);
+            }
 
         }
         else{
