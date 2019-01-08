@@ -6,7 +6,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.GraphicsContext;
-
+import javafx.scene.text.Text;
 import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -18,11 +18,16 @@ import javafx.stage.Stage;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
-import javax.xml.soap.Text;
+
+import static sample.Board.textUpdate;
 
 public class Main extends Application{
 
+
     static Button[][] btns = new Button[8][8];
+
+    Text label = new Text();
+
     public static void setColour (int j, int i){
         i--;
         i = 7-i;
@@ -42,6 +47,9 @@ public class Main extends Application{
         btns[i][j].setStyle("-fx-background-color: " + colour + ";");
 
     }//end method
+    public static void drawPieces (){
+    }//end method
+
     static Board board = new Board();
 
     @Override
@@ -64,8 +72,8 @@ public class Main extends Application{
                 int finalI = 7-i+1;
                 int finalJ = j+1;
                 // sketchy but works
-
                 btns[i][j].setOnAction(e -> Board.click(finalJ, finalI));
+
 
             }
         }
@@ -75,8 +83,9 @@ public class Main extends Application{
         hbox.setPrefWidth(400);
         hbox.setPrefHeight(400);
         VBox vbox = new VBox(hbox);
-        hbox.getChildren().add(myTextField);
-        HBox.setHgrow(myTextField, Priority.ALWAYS);
+        //.getChildren().add(myTextField);
+        //HBox.setHgrow(myTextField, Priority.ALWAYS);
+
 
         for(int i = 0; i < 8; i++){
             board_button.getColumnConstraints().add(new ColumnConstraints(50, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
@@ -88,6 +97,7 @@ public class Main extends Application{
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
+
 
         AnimationTimer timer = new AnimationTimer(){
             @Override
