@@ -156,7 +156,52 @@ public class Main extends Application{
         launch(args);
     }
 
-    public static void movePiece(int x, int y, int oldX, int oldY, String type, int colour){
+    public static void movePiece(int x, int y, int oldX, int oldY, String type, int color){
+        switch (color) {
+            case 0:
+                switch (type) {
+                    case "Rook":
+                        btns[x][y].setGraphic(new ImageView("assets/Rook_white.png"));
+                        return;
+                    case "Knight":
+                        btns[x][y].setGraphic(new ImageView("assets/Knight_white.png"));
+                        return;
+                    case "Bishop":
+                        btns[x][y].setGraphic(new ImageView("assets/Bishop_white.png"));
+                        return;
+                    case "Queen":
+                        btns[x][y].setGraphic(new ImageView("assets/Queen_white.png"));
+                        return;
+                    case "King":
+                        btns[x][y].setGraphic(new ImageView("assets/King_white.png"));
+                        return;
+                    case "Pawn":
+                        btns[x][y].setGraphic(new ImageView("assets/Pawn_white.png"));
+                        return;
+                }
+            case 1:
+                switch (type) {
+                    case "Rook":
+                        btns[x][y].setGraphic(new ImageView("assets/Rook_black.png"));
+                        return;
+                    case "Knight":
+                        btns[x][y].setGraphic(new ImageView("assets/Knight_black.png"));
+                        return;
+                    case "Bishop":
+                        btns[x][y].setGraphic(new ImageView("assets/Bishop_black.png"));
+                        return;
+                    case "Queen":
+                        btns[x][y].setGraphic(new ImageView("assets/Queen_black.png"));
+                        return;
+                    case "King":
+                        btns[x][y].setGraphic(new ImageView("assets/King_black.png"));
+                        return;
+                    case "Pawn":
+                        btns[x][y].setGraphic(new ImageView("assets/Pawn_black.png"));
+                        return;
+                }
 
+                btns[oldX][oldY].setGraphic(new ImageView((String) null));
+        }
     }
 }
