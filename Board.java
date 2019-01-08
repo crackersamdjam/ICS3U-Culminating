@@ -8,6 +8,8 @@ public class Board{
     static Piece empty = new Piece("null", -1, false);
     static final int white = 0, black = 1;
 
+    public static String textUpdate = "";
+
     static int turn = white;
 
     // initialize stating position
@@ -71,18 +73,45 @@ public class Board{
     }
 
     static void click(int x, int y){
-
-        System.out.println("click " + x + " " + y);
+        String letter = "";
+        switch(x){
+            case 1:
+                letter = "a";
+                break;
+            case 2:
+                letter = "b";
+                break;
+            case 3:
+                letter = "c";
+                break;
+            case 4:
+                letter = "d";
+                break;
+            case 5:
+                letter = "e";
+                break;
+            case 6:
+                letter = "f";
+                break;
+            case 7:
+                letter = "g";
+                break;
+            case 8:
+                letter = "h";
+                break;
+        }
+        System.out.println("click " + letter + y);
+        textUpdate = "click " + letter + y;
 
         if(hasPieceSelected){
             // moving to this square
-
             // rm color
             Main.rmColour(oldX, oldY);
 
             // check if valid move
             if(!board[oldX][oldY].isValid(oldX, oldY, x, y)){
                 System.out.println("Invalid move, piece has been deselected");
+                textUpdate = "Invalid move, piece has been deselected";
                 hasPieceSelected = false;
                 return;
             }
@@ -90,6 +119,7 @@ public class Board{
             // check if move is legal (jumps over pieces)
             if(!board[oldX][oldY].isLegal(oldX, oldY, x, y)){
                 System.out.println("Illegal move");
+                textUpdate = "Illegal move";
                 hasPieceSelected = false;
                 return;
             }
@@ -97,6 +127,7 @@ public class Board{
             // check if move results in check
             if(isCheck(turn)){
                 System.out.println("Results in check, move reset");
+                textUpdate = "Results in check, move reset";
                 hasPieceSelected = false;
                 return;
             }
@@ -105,16 +136,18 @@ public class Board{
             board[x][y] = board[oldX][oldY];
             board[oldX][oldY] = empty;
             // this works
-            
+
 
         }
         else{
             if(board[x][y].type.equals("null")){
                 System.out.println("nothing to select");
+                textUpdate = "nothing to select";
                 return;
             }
             if(board[x][y].colour != turn){
                 System.out.println("Wrong coloured piece");
+                textUpdate =  "Wrong coloured piece";
                 return;
             }
             hasPieceSelected = true;
