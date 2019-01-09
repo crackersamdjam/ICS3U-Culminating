@@ -162,8 +162,9 @@ public class Main extends Application{
         newWindow.show();
     }
 
-    public static void movePiece(int y, int x, int oldY, int oldX, String type, int color) {
-
+    //move image to new button, delete old image from old button
+    public static void movePiece(int y, int x, int oldY, int oldX, String type, int color) { 
+        
         // sketchy conversions
         x--;
         x = 7-x;
@@ -185,4 +186,3 @@ public class Main extends Application{
         launch(args);
     }
 }
-
