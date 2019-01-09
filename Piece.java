@@ -74,8 +74,11 @@ public class Piece{
         if(!exist)
             return false;
 
-        //same spot
+        // same spot
         if(newX == x && newY == y)
+            return false;
+        // can not capture own piece
+        if(Board.get(newX, newY).colour == this.colour)
             return false;
 
         switch(type){
@@ -147,7 +150,7 @@ public class Piece{
                     }
 
                     //first move 2 squares
-                    if(newX == x && y == 7 && newY == 5 && !Board.get(x, 7).exist){
+                    if(newX == x && y == 7 && newY == 5 && !Board.get(x, 5).exist){
                         //set en passant
                         epx = x;
                         epy = 6;

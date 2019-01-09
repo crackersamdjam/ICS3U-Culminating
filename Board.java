@@ -65,20 +65,20 @@ public class Board{
         }
         for(int i = 1; i <= 8; i++){
             for(int j = 1; j <= 8; j++){
-                if(board[i][j].isValid(i, j, x, y))
-                    return false;
+                if(board[i][j].colour != turn && board[i][j].isValid(i, j, x, y))
+                    return true;
             }
         }
-        return true;
+        return false;
     }
     static boolean isCheck(int x, int y){
         for(int i = 1; i <= 8; i++){
             for(int j = 1; j <= 8; j++){
-                if(board[i][j].isValid(i, j, x, y))
-                    return false;
+                if(board[i][j].colour != turn && board[i][j].isValid(i, j, x, y))
+                    return true;
             }
         }
-        return true;
+        return false;
     }
 
     static void click(int x, int y){
@@ -114,9 +114,9 @@ public class Board{
 
         if(hasPieceSelected){
             // moving to this square
-            // rm color
-            Main.rmColour(oldX, oldY);
 
+            hasPieceSelected = false;
+            Main.rmColour(oldX, oldY);
 
             if(board[oldX][oldY].isCastle(oldX, oldY, x, y)){
                 if(x > oldX){
@@ -139,9 +139,9 @@ public class Board{
             else{
                 // check if valid move
                 if(!board[oldX][oldY].isValid(oldX, oldY, x, y)){
+                    //why is this running after successful move
                     System.out.println("Invalid move, piece has been deselected");
                     textUpdate = "Invalid move, piece has been deselected";
-                    hasPieceSelected = false;
                     return;
                 }
 
@@ -149,23 +149,27 @@ public class Board{
                 if(!board[oldX][oldY].isLegal(oldX, oldY, x, y)){
                     System.out.println("Illegal move");
                     textUpdate = "Illegal move";
-                    hasPieceSelected = false;
                     return;
                 }
             }
+
+            // move the piece
+            Piece temp = board[x][y];
+            board[x][y] = board[oldX][oldY];
+            board[oldX][oldY] = empty;
 
             // check if move results in check
             if(isCheck(turn)){
                 System.out.println("Results in check, move reset");
                 textUpdate = "Results in check, move reset";
-                hasPieceSelected = false;
+
+                // reset pieces
+                board[oldX][oldY] = board[x][y];
+                board[x][y] = temp;
                 return;
             }
-            // move the piece (reset en passant too)
 
-            board[x][y] = board[oldX][oldY];
-            board[oldX][oldY] = empty;
-            // this works
+
 
             Main.movePiece(x, y, oldX, oldY, board[x][y].type, board[x][y].colour);
             turn ^= 1;
