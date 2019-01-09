@@ -215,6 +215,6 @@ public class Main extends Application{
                     return;
             }
         }
-        btns[oldX][oldY].setGraphic(new ImageView("null"));
+        btns[oldX][oldY].setGraphic(new ImageView(null));
     }
 }
