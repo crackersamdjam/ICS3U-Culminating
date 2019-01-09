@@ -21,6 +21,12 @@ public class Piece{
         this.exist = exist;
     }
 
+    // copy
+    public Piece copy(){
+        Piece ret = new Piece(type, colour, exist);
+        return ret;
+    }
+
     //en passant
     int epx, epy;
 
@@ -243,7 +249,6 @@ public class Piece{
 
                 if(x == newX || y == newY){
                     // same code as for rook
-
                     if(x == newX){
                         if(newY > y){
                             for(int i = y+1; i < newY; i++)

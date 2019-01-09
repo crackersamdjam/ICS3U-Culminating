@@ -52,20 +52,23 @@ public class Board{
         enPassant = true;
     }
 
-    static boolean isCheck(int colour){
+    static boolean isCheck(){
         int x = -1, y = -1;
         for(int i = 1; i <= 8; i++){
             for(int j = 1; j <= 8; j++){
-                if(board[i][j].colour == colour && board[i][j].type.equals("King")){
+                if(board[i][j].colour == turn && board[i][j].type.equals("King")){
                     x = i;
                     y = j;
                     break;
                 }
             }
         }
+        if(x == -1){
+            System.out.println("ERROR turn = " + turn);
+        }
         for(int i = 1; i <= 8; i++){
             for(int j = 1; j <= 8; j++){
-                if(board[i][j].colour != turn && board[i][j].isValid(i, j, x, y))
+                if(board[i][j].colour != turn && board[i][j].isValid(i, j, x, y) && board[i][j].isLegal(i, j, x, y))
                     return true;
             }
         }
@@ -74,15 +77,49 @@ public class Board{
     static boolean isCheck(int x, int y){
         for(int i = 1; i <= 8; i++){
             for(int j = 1; j <= 8; j++){
-                if(board[i][j].colour != turn && board[i][j].isValid(i, j, x, y))
+                if(board[i][j].colour != turn && board[i][j].isValid(i, j, x, y) && board[i][j].isLegal(i, j, x, y))
                     return true;
             }
         }
         return false;
     }
 
+    static boolean isCheckmate(){
+        boolean flag;
+        // check making every move possible
+        for(int i = 1; i <= 8; i++){
+            for(int j = 1; j <= 8; j++){
+                if(board[i][j].colour == turn){
+
+                    for(int k = 1; k <= 8; k++){
+                        for(int l = 1; l <= 8; l++){
+                            if(board[i][j].isValid(i, j, k, l) && board[i][j].isLegal(i, j, k, l)){
+                                // move the piece
+                                Piece temp = board[k][l].copy();
+                                board[k][l] = board[i][j].copy();
+                                board[i][j] = empty;
+
+                                flag = isCheck();
+
+                                // reset pieces
+                                board[i][j] = board[k][l].copy();
+                                board[k][l] = temp.copy();
+
+                                // if not check, then not checkmate
+                                if(!flag)
+                                    return false;
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+        return true;
+    }
+
     static void click(int x, int y){
-        
+
         char file = (char)(x+'a'-1);
         System.out.println("click " + file + y);
         textUpdate = "click " + file + y;
@@ -129,18 +166,18 @@ public class Board{
             }
 
             // move the piece
-            Piece temp = board[x][y];
-            board[x][y] = board[oldX][oldY];
+            Piece temp = board[x][y].copy();
+            board[x][y] = board[oldX][oldY].copy();
             board[oldX][oldY] = empty;
 
             // check if move results in check
-            if(isCheck(turn)){
+            if(isCheck()){
                 System.out.println("Results in check, move reset");
                 textUpdate = "Results in check, move reset";
 
                 // reset pieces
-                board[oldX][oldY] = board[x][y];
-                board[x][y] = temp;
+                board[oldX][oldY] = board[x][y].copy();
+                board[x][y] = temp.copy();
                 return;
             }
 
@@ -167,6 +204,11 @@ public class Board{
                 Piece.castleOp(black, true);
             }
 
+            // check if move resulted in checkmate
+            if(isCheckmate()){
+                int winner = turn^1;
+                System.out.println((winner == white? "White" : "Black") + " checkmated the opponent!");
+            }
         }
         else{
             if(board[x][y].type.equals("null")){
