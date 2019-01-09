@@ -82,35 +82,10 @@ public class Board{
     }
 
     static void click(int x, int y){
-        String letter = "";
-        switch(x){
-            case 1:
-                letter = "a";
-                break;
-            case 2:
-                letter = "b";
-                break;
-            case 3:
-                letter = "c";
-                break;
-            case 4:
-                letter = "d";
-                break;
-            case 5:
-                letter = "e";
-                break;
-            case 6:
-                letter = "f";
-                break;
-            case 7:
-                letter = "g";
-                break;
-            case 8:
-                letter = "h";
-                break;
-        }
-        System.out.println("click " + letter + y);
-        textUpdate = "click " + letter + y;
+        
+        char file = (char)(x+'a'-1);
+        System.out.println("click " + file + y);
+        textUpdate = "click " + file + y;
 
         if(hasPieceSelected){
             // moving to this square
