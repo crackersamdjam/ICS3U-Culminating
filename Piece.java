@@ -25,10 +25,6 @@ public class Piece{
         return ret;
     }
 
-    //en passant
-    int epx, epy;
-
-
     private void promotion(Piece piece){
 
     }
@@ -130,8 +126,6 @@ public class Piece{
                     //first move 2 squares
                     if(newX == x && y == 2 && newY == 4 && !Board.get(x, 4).exist){
                         //set en passant
-                        epx = x;
-                        epy = 3;
                         return true;
                     }
 
@@ -139,10 +133,6 @@ public class Piece{
                     if(Math.abs(newX-x) == 1 && newY == y+1){
                         if(Board.get(newX, newY).colour == black)
                             return true;
-                        if(epx == newX && epy == newY){
-                            Board.setEnPassant();
-                            return true;
-                        }
                     }
                 }
                 else{
@@ -156,8 +146,6 @@ public class Piece{
                     //first move 2 squares
                     if(newX == x && y == 7 && newY == 5 && !Board.get(x, 5).exist){
                         //set en passant
-                        epx = x;
-                        epy = 6;
                         return true;
                     }
 
@@ -165,16 +153,12 @@ public class Piece{
                     if(Math.abs(newX-x) == 1 && newY == y-1){
                         if(Board.get(newX, newY).colour == white)
                             return true;
-                        if((epx == newX && epy == newY)){
-                            Board.setEnPassant();
-                            return true;
-                        }
                     }
                 }
                 return false;
 
             default:
-                System.out.println("Empty");
+                System.out.println("This should not happen");
                 return false;
         }
     }
@@ -193,7 +177,7 @@ public class Piece{
                                 return false;
                     }
                     else{
-                        for(int i = y-1; i > y; i--)
+                        for(int i = y-1; i > newY; i--)
                             if(Board.get(x, i).exist)
                                 return false;
                     }
@@ -243,6 +227,7 @@ public class Piece{
                 }
                 break;
 
+
             case "Queen":
                 if(x == newX || y == newY){
                     // same code as for rook
@@ -253,9 +238,10 @@ public class Piece{
                                     return false;
                         }
                         else{
-                            for(int i = y-1; i > y; i--)
+                            for(int i = y-1; i > newY; i--){
                                 if(Board.get(x, i).exist)
                                     return false;
+                            }
                         }
                     }
                     else{
