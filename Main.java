@@ -21,30 +21,20 @@ import javafx.stage.Stage;
 
 public class Main extends Application{
 
-    int run = 0;
+    static final int white = 0, black = 1;
+    static Board board = new Board();
     static Button[][] btns = new Button[8][8];
 
     public static void setColour (int j, int i){
-        i--;
-        i = 7-i;
-        j--;
+        i--; i = 7-i; j--;
         btns[i][j].setStyle("-fx-background-color: " + "red" + ";");
     }
     public static void rmColour (int j, int i){
-        i--;
-        i = 7-i;
-        j--;
-        String colour;
-        if((i + j) % 2 == 0){
-            colour = "beige";
-        }else{
-            colour = "brown";
-        }
+        i--; i = 7-i; j--;
+        String colour = ((i+j)&1) == 1 ? "brown" : "beige";
         btns[i][j].setStyle("-fx-background-color: " + colour + ";");
 
     }
-
-    static Board board = new Board();
 
     @Override
     public void start(Stage primaryStage){
@@ -52,19 +42,13 @@ public class Main extends Application{
         for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
                 Button button_square = new Button();
-                String colour;
-                if((i + j) % 2 == 0){
-                    colour = "beige";
-                }else{
-                    colour = "brown";
-                }
+                String colour = ((i+j)&1) == 1 ? "brown" : "beige";
                 button_square.setStyle("-fx-background-color: " + colour + ";");
                 button_square.setPrefWidth(80);
                 button_square.setPrefHeight(80);
                 board_button.add(button_square, j, i);
                 btns[i][j] = button_square;
-                int finalI = 7-i+1;
-                int finalJ = j+1;
+                int finalI = 7-i+1, finalJ = j+1;
                 // sketchy but works
                 btns[i][j].setOnAction(e -> Board.click(finalJ, finalI));
 
@@ -163,20 +147,12 @@ public class Main extends Application{
     }
 
     //move image to new button, delete old image from old button
-    public static void movePiece(int y, int x, int oldY, int oldX, String type, int color) { 
-        
+    public static void movePiece(int y, int x, int oldY, int oldX, String type, int color) {
+
         // sketchy conversions
-        x--;
-        x = 7-x;
-        y--;
-        oldX--;
-        oldX = 7-oldX;
-        oldY--;
-        String colour_str;
-        if(color == 0)
-            colour_str = "white";
-        else
-            colour_str = "black";
+        x--; x = 7-x; y--; oldX--; oldX = 7-oldX; oldY--;
+
+        String colour_str = color == white? "white" : "black";
         Image image = new Image(Main.class.getResourceAsStream("assets/" + type + "_" + colour_str + ".png"));
         btns[x][y].setGraphic(new ImageView(image));
         btns[oldX][oldY].setGraphic(null);
