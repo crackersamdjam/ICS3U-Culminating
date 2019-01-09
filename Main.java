@@ -128,9 +128,9 @@ public class Main extends Application{
         Scene scene = new Scene(vbox, 1000, 640);
         primaryStage.setTitle("assets/Shahmati");
         primaryStage.setResizable(false);
-
         primaryStage.setScene(scene);
         primaryStage.show();
+        displayEnd("CHECKMATE");
 
 
         AnimationTimer timer = new AnimationTimer(){
@@ -145,8 +145,21 @@ public class Main extends Application{
         primaryStage.show();
 
     }
-    public static void main(String[] args){
-        launch(args);
+
+    public static void displayEnd(String text){
+
+        Label secondLabel = new Label(text);
+        StackPane secondaryLayout = new StackPane();
+        secondaryLayout.getChildren().add(secondLabel);
+
+        Scene secondScene = new Scene(secondaryLayout, 300, 100);
+
+        // New window (Stage)
+        Stage newWindow = new Stage();
+        newWindow.setTitle("End of Game");
+        newWindow.setScene(secondScene);
+
+        newWindow.show();
     }
 
     public static void movePiece(int y, int x, int oldY, int oldX, String type, int color) {
@@ -167,4 +180,9 @@ public class Main extends Application{
         btns[x][y].setGraphic(new ImageView(image));
         btns[oldX][oldY].setGraphic(null);
     }
+
+    public static void main(String[] args){
+        launch(args);
+    }
 }
+
