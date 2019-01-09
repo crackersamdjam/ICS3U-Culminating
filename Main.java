@@ -72,42 +72,42 @@ public class Main extends Application{
         }
 
 
-            Image rw = new Image(getClass().getResourceAsStream("assets/Rook_white.png"));
-            btns[7][0].setGraphic(new ImageView(rw));
-            btns[7][7].setGraphic(new ImageView(rw));
-            Image kw = new Image(getClass().getResourceAsStream("assets/Knight_white.png"));
-            btns[7][1].setGraphic(new ImageView(kw));
-            btns[7][6].setGraphic(new ImageView(kw));
-            Image bw = new Image(getClass().getResourceAsStream("assets/Bishop_white.png"));
-            btns[7][2].setGraphic(new ImageView(bw));
-            btns[7][5].setGraphic(new ImageView(bw));
-            Image Qw = new Image(getClass().getResourceAsStream("assets/Queen_white.png"));
-            btns[7][3].setGraphic(new ImageView(Qw));
-            Image Kw = new Image(getClass().getResourceAsStream("assets/King_white.png"));
-            btns[7][4].setGraphic(new ImageView(Kw));
+        Image rw = new Image(getClass().getResourceAsStream("assets/Rook_white.png"));
+        btns[7][0].setGraphic(new ImageView(rw));
+        btns[7][7].setGraphic(new ImageView(rw));
+        Image kw = new Image(getClass().getResourceAsStream("assets/Knight_white.png"));
+        btns[7][1].setGraphic(new ImageView(kw));
+        btns[7][6].setGraphic(new ImageView(kw));
+        Image bw = new Image(getClass().getResourceAsStream("assets/Bishop_white.png"));
+        btns[7][2].setGraphic(new ImageView(bw));
+        btns[7][5].setGraphic(new ImageView(bw));
+        Image Qw = new Image(getClass().getResourceAsStream("assets/Queen_white.png"));
+        btns[7][3].setGraphic(new ImageView(Qw));
+        Image Kw = new Image(getClass().getResourceAsStream("assets/King_white.png"));
+        btns[7][4].setGraphic(new ImageView(Kw));
 
-            Image pw = new Image(getClass().getResourceAsStream("assets/Pawn_white.png"));
-            for (int i = 0; i <= 7; i++) {
-                btns[6][i].setGraphic(new ImageView(pw));
-            }
+        Image pw = new Image(getClass().getResourceAsStream("assets/Pawn_white.png"));
+        for (int i = 0; i <= 7; i++) {
+            btns[6][i].setGraphic(new ImageView(pw));
+        }
 
-            Image rb = new Image(getClass().getResourceAsStream("assets/Rook_black.png"));
-            btns[0][0].setGraphic(new ImageView(rb));
-            btns[0][7].setGraphic(new ImageView(rb));
-            Image kb = new Image(getClass().getResourceAsStream("assets/Knight_black.png"));
-            btns[0][1].setGraphic(new ImageView(kb));
-            btns[0][6].setGraphic(new ImageView(kb));
-            Image bb = new Image(getClass().getResourceAsStream("assets/Bishop_black.png"));
-            btns[0][2].setGraphic(new ImageView(bb));
-            btns[0][5].setGraphic(new ImageView(bb));
-            Image Qb = new Image(getClass().getResourceAsStream("assets/Queen_black.png"));
-            btns[0][3].setGraphic(new ImageView(Qb));
-            Image Kb = new Image(getClass().getResourceAsStream("assets/King_black.png"));
-            btns[0][4].setGraphic(new ImageView(Kb));
+        Image rb = new Image(getClass().getResourceAsStream("assets/Rook_black.png"));
+        btns[0][0].setGraphic(new ImageView(rb));
+        btns[0][7].setGraphic(new ImageView(rb));
+        Image kb = new Image(getClass().getResourceAsStream("assets/Knight_black.png"));
+        btns[0][1].setGraphic(new ImageView(kb));
+        btns[0][6].setGraphic(new ImageView(kb));
+        Image bb = new Image(getClass().getResourceAsStream("assets/Bishop_black.png"));
+        btns[0][2].setGraphic(new ImageView(bb));
+        btns[0][5].setGraphic(new ImageView(bb));
+        Image Qb = new Image(getClass().getResourceAsStream("assets/Queen_black.png"));
+        btns[0][3].setGraphic(new ImageView(Qb));
+        Image Kb = new Image(getClass().getResourceAsStream("assets/King_black.png"));
+        btns[0][4].setGraphic(new ImageView(Kb));
 
-            Image pb = new Image(getClass().getResourceAsStream("assets/Pawn_black.png"));
-            for (int i = 0; i <= 7; i++) {
-                btns[1][i].setGraphic(new ImageView(pb));
+        Image pb = new Image(getClass().getResourceAsStream("assets/Pawn_black.png"));
+        for (int i = 0; i <= 7; i++) {
+            btns[1][i].setGraphic(new ImageView(pb));
 
         }
 
@@ -165,57 +165,56 @@ public class Main extends Application{
                 case "Rook":
                     Image rw = new Image(Main.class.getResourceAsStream("assets/Rook_white.png"));
                     btns[x][y].setGraphic(new ImageView(rw));
-                    return;
+                    break;
                 case "Knight":
                     Image kw = new Image(Main.class.getResourceAsStream("assets/Knight_white.png"));
                     btns[x][y].setGraphic(new ImageView(kw));
-                    return;
+                    break;
                 case "Bishop":
                     Image bw = new Image(Main.class.getResourceAsStream("assets/Bishop_white.png"));
                     btns[x][y].setGraphic(new ImageView(bw));
-                    return;
+                    break;
                 case "Queen":
                     Image Qw = new Image(Main.class.getResourceAsStream("assets/Queen_white.png"));
                     btns[x][y].setGraphic(new ImageView(Qw));
-                    return;
+                    break;
                 case "King":
                     Image Kw = new Image(Main.class.getResourceAsStream("assets/King_white.png"));
                     btns[x][y].setGraphic(new ImageView(Kw));
-                    return;
+                    break;
                 case "Pawn":
                     Image pw = new Image(Main.class.getResourceAsStream("assets/Pawn_white.png"));
                     btns[x][y].setGraphic(new ImageView(pw));
-                    return;
+                    break;
             }
         } else {
             switch (type) {
                 case "Rook":
                     Image rb = new Image(Main.class.getResourceAsStream("assets/Rook_black.png"));
                     btns[x][y].setGraphic(new ImageView(rb));
-                    return;
+                    break;
                 case "Knight":
                     Image kb = new Image(Main.class.getResourceAsStream("assets/Knight_black.png"));
                     btns[x][y].setGraphic(new ImageView(kb));
-                    return;
+                    break;
                 case "Bishop":
                     Image bb = new Image(Main.class.getResourceAsStream("assets/Bishop_black.png"));
                     btns[x][y].setGraphic(new ImageView(bb));
-                    return;
+                    break;
                 case "Queen":
                     Image Qb = new Image(Main.class.getResourceAsStream("assets/Queen_black.png"));
                     btns[x][y].setGraphic(new ImageView(Qb));
-                    return;
+                    break;
                 case "King":
                     Image Kb = new Image(Main.class.getResourceAsStream("assets/King_black.png"));
                     btns[x][y].setGraphic(new ImageView(Kb));
-                    return;
+                    break;
                 case "Pawn":
                     Image pb = new Image(Main.class.getResourceAsStream("assets/Pawn_black.png"));
                     btns[x][y].setGraphic(new ImageView(pb));
-                    return;
+                    break;
             }
         }
-        Image blank = new Image(Main.class.getResourceAsStream("80x80.png"));
-        btns[oldX][oldY].setGraphic(new ImageView(blank));
+        btns[oldX][oldY].setGraphic(null);
     }
 }
