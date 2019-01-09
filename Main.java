@@ -34,7 +34,7 @@ public class Main extends Application{
         i--;
         i = 7-i;
         j--;
-        btns[i][j].setStyle("assets/-fx-background-color: " + "red" + ";");
+        btns[i][j].setStyle("-fx-background-color: " + "red" + ";");
     }//end method
     public static void rmColour (int j, int i){
         i--;
@@ -46,7 +46,7 @@ public class Main extends Application{
         }else{
             colour = "brown";
         }
-        btns[i][j].setStyle("assets/-fx-background-color: " + colour + ";");
+        btns[i][j].setStyle("-fx-background-color: " + colour + ";");
 
     }//end method
     public static void drawPieces (){
@@ -123,8 +123,8 @@ public class Main extends Application{
         hbox.setPrefWidth(520);
         hbox.setPrefHeight(520);
         VBox vbox = new VBox(hbox);
-        //.getChildren().add(myTextField);
-        //HBox.setHgrow(myTextField, Priority.ALWAYS);
+        hbox.getChildren().add(myTextField);
+        HBox.setHgrow(myTextField, Priority.ALWAYS);
 
 
         for(int i = 0; i < 8; i++){
@@ -156,52 +156,65 @@ public class Main extends Application{
         launch(args);
     }
 
-    public static void movePiece(int x, int y, int oldX, int oldY, String type, int color){
-        switch (color) {
-            case 0:
-                switch (type) {
-                    case "Rook":
-                        btns[x][y].setGraphic(new ImageView("assets/Rook_white.png"));
-                        return;
-                    case "Knight":
-                        btns[x][y].setGraphic(new ImageView("assets/Knight_white.png"));
-                        return;
-                    case "Bishop":
-                        btns[x][y].setGraphic(new ImageView("assets/Bishop_white.png"));
-                        return;
-                    case "Queen":
-                        btns[x][y].setGraphic(new ImageView("assets/Queen_white.png"));
-                        return;
-                    case "King":
-                        btns[x][y].setGraphic(new ImageView("assets/King_white.png"));
-                        return;
-                    case "Pawn":
-                        btns[x][y].setGraphic(new ImageView("assets/Pawn_white.png"));
-                        return;
-                }
-            case 1:
-                switch (type) {
-                    case "Rook":
-                        btns[x][y].setGraphic(new ImageView("assets/Rook_black.png"));
-                        return;
-                    case "Knight":
-                        btns[x][y].setGraphic(new ImageView("assets/Knight_black.png"));
-                        return;
-                    case "Bishop":
-                        btns[x][y].setGraphic(new ImageView("assets/Bishop_black.png"));
-                        return;
-                    case "Queen":
-                        btns[x][y].setGraphic(new ImageView("assets/Queen_black.png"));
-                        return;
-                    case "King":
-                        btns[x][y].setGraphic(new ImageView("assets/King_black.png"));
-                        return;
-                    case "Pawn":
-                        btns[x][y].setGraphic(new ImageView("assets/Pawn_black.png"));
-                        return;
-                }
+    public static void movePiece(int x, int y, int oldX, int oldY, String type, int color) {
 
-                btns[oldX][oldY].setGraphic(new ImageView((String) null));
+
+        if (color == 0) {
+            switch (type) {
+
+                case "Rook":
+                    Image rw = new Image(Main.class.getResourceAsStream("assets/Rook_white.png"));
+                    btns[x][y].setGraphic(new ImageView(rw));
+                    return;
+                case "Knight":
+                    Image kw = new Image(Main.class.getResourceAsStream("assets/Knight_white.png"));
+                    btns[x][y].setGraphic(new ImageView(kw));
+                    return;
+                case "Bishop":
+                    Image bw = new Image(Main.class.getResourceAsStream("assets/Bishop_white.png"));
+                    btns[x][y].setGraphic(new ImageView(bw));
+                    return;
+                case "Queen":
+                    Image Qw = new Image(Main.class.getResourceAsStream("assets/Queen_white.png"));
+                    btns[x][y].setGraphic(new ImageView(Qw));
+                    return;
+                case "King":
+                    Image Kw = new Image(Main.class.getResourceAsStream("assets/King_white.png"));
+                    btns[x][y].setGraphic(new ImageView(Kw));
+                    return;
+                case "Pawn":
+                    Image pw = new Image(Main.class.getResourceAsStream("assets/Pawn_white.png"));
+                    btns[x][y].setGraphic(new ImageView(pw));
+                    return;
+            }
+        } else {
+            switch (type) {
+                case "Rook":
+                    Image rb = new Image(Main.class.getResourceAsStream("assets/Rook_black.png"));
+                    btns[x][y].setGraphic(new ImageView(rb));
+                    return;
+                case "Knight":
+                    Image kb = new Image(Main.class.getResourceAsStream("assets/Knight_black.png"));
+                    btns[x][y].setGraphic(new ImageView(kb));
+                    return;
+                case "Bishop":
+                    Image bb = new Image(Main.class.getResourceAsStream("assets/Bishop_black.png"));
+                    btns[x][y].setGraphic(new ImageView(bb));
+                    return;
+                case "Queen":
+                    Image Qb = new Image(Main.class.getResourceAsStream("assets/Queen_black.png"));
+                    btns[x][y].setGraphic(new ImageView(Qb));
+                    return;
+                case "King":
+                    Image Kb = new Image(Main.class.getResourceAsStream("assets/King_black.png"));
+                    btns[x][y].setGraphic(new ImageView(Kb));
+                    return;
+                case "Pawn":
+                    Image pb = new Image(Main.class.getResourceAsStream("assets/Pawn_black.png"));
+                    btns[x][y].setGraphic(new ImageView(pb));
+                    return;
+            }
         }
+        btns[oldX][oldY].setGraphic(new ImageView("null"));
     }
 }
