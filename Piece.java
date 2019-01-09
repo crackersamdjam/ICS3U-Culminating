@@ -5,7 +5,6 @@ public class Piece{
     static boolean[] king = {true, true}, queen = {true, true};
     // white castle kingside, queenside, black ", " "
 
-
     String type;
     int colour;
     // white = 0, black = 1
@@ -21,7 +20,6 @@ public class Piece{
         this.exist = exist;
     }
 
-    // copy
     public Piece copy(){
         Piece ret = new Piece(type, colour, exist);
         return ret;
@@ -183,7 +181,7 @@ public class Piece{
 
     public boolean isLegal(int x, int y, int newX, int newY){
 
-        //no need to check pawn, knight, king  - no way of jumping over
+        //no need to check pawn, knight, king  - no way of jumping over other pieces
 
         switch(this.type){
 
@@ -246,7 +244,6 @@ public class Piece{
                 break;
 
             case "Queen":
-
                 if(x == newX || y == newY){
                     // same code as for rook
                     if(x == newX){
@@ -306,7 +303,6 @@ public class Piece{
                     }
                 }
                 break;
-
                 default:;
         }
         return true;

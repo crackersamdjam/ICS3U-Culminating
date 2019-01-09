@@ -8,17 +8,13 @@ public class Board{
     static Piece empty = new Piece("null", -1, false);
     static final int white = 0, black = 1;
 
-    public static String textUpdate = "";
-
     static int turn = white;
 
     // initialize stating position
     public Board(){
-        for(int i = 1; i <= 8; i++){
-            for(int j = 1; j <= 8; j++){
+        for(int i = 1; i <= 8; i++)
+            for(int j = 1; j <= 8; j++)
                 board[i][j] = empty;
-            }
-        }
         board[1][1] = new Piece("Rook", white, true);
         board[2][1] = new Piece("Knight", white, true);
         board[3][1] = new Piece("Bishop", white, true);
@@ -27,9 +23,8 @@ public class Board{
         board[6][1] = new Piece("Bishop", white, true);
         board[7][1] = new Piece("Knight", white, true);
         board[8][1] = new Piece("Rook", white, true);
-        for(int i = 1; i <= 8; i++){
+        for(int i = 1; i <= 8; i++)
             board[i][2] = new Piece("Pawn", white, true);
-        }
 
         board[1][8] = new Piece("Rook", black,  true);
         board[2][8] = new Piece("Knight", black, true);
@@ -39,9 +34,8 @@ public class Board{
         board[6][8] = new Piece("Bishop", black, true);
         board[7][8] = new Piece("Knight", black, true);
         board[8][8] = new Piece("Rook", black, true);
-        for(int i = 1; i <= 8; i++){
+        for(int i = 1; i <= 8; i++)
             board[i][7] = new Piece("Pawn", black, true);
-        }
     }
 
     static Piece get(int x, int y){
@@ -85,7 +79,6 @@ public class Board{
     }
 
     static boolean isCheckmate(){
-        boolean flag;
         // check making every move possible
         for(int i = 1; i <= 8; i++){
             for(int j = 1; j <= 8; j++){
@@ -99,7 +92,7 @@ public class Board{
                                 board[k][l] = board[i][j].copy();
                                 board[i][j] = empty;
 
-                                flag = isCheck();
+                                boolean flag = isCheck();
 
                                 // reset pieces
                                 board[i][j] = board[k][l].copy();
@@ -122,7 +115,6 @@ public class Board{
 
         char file = (char)(x+'a'-1);
         System.out.println("click " + file + y);
-        textUpdate = "click " + file + y;
 
         if(hasPieceSelected){
             // moving to this square
@@ -153,14 +145,12 @@ public class Board{
                 if(!board[oldX][oldY].isValid(oldX, oldY, x, y)){
                     //why is this running after successful move
                     System.out.println("Invalid move, piece has been deselected");
-                    textUpdate = "Invalid move, piece has been deselected";
                     return;
                 }
 
                 // check if move is legal (jumps over pieces)
                 if(!board[oldX][oldY].isLegal(oldX, oldY, x, y)){
                     System.out.println("Illegal move");
-                    textUpdate = "Illegal move";
                     return;
                 }
             }
@@ -173,15 +163,12 @@ public class Board{
             // check if move results in check
             if(isCheck()){
                 System.out.println("Results in check, move reset");
-                textUpdate = "Results in check, move reset";
 
                 // reset pieces
                 board[oldX][oldY] = board[x][y].copy();
                 board[x][y] = temp.copy();
                 return;
             }
-
-
 
             Main.movePiece(x, y, oldX, oldY, board[x][y].type, board[x][y].colour);
             turn ^= 1;
@@ -213,12 +200,10 @@ public class Board{
         else{
             if(board[x][y].type.equals("null")){
                 System.out.println("nothing to select");
-                textUpdate = "nothing to select";
                 return;
             }
             if(board[x][y].colour != turn){
                 System.out.println("Wrong coloured piece");
-                textUpdate =  "Wrong coloured piece";
                 return;
             }
             hasPieceSelected = true;

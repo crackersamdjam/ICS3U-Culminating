@@ -17,25 +17,18 @@ import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 
-
-import static sample.Board.textUpdate;
 
 public class Main extends Application{
 
-
     static Button[][] btns = new Button[8][8];
-
-    Text label = new Text();
 
     public static void setColour (int j, int i){
         i--;
         i = 7-i;
         j--;
         btns[i][j].setStyle("-fx-background-color: " + "red" + ";");
-    }//end method
+    }
     public static void rmColour (int j, int i){
         i--;
         i = 7-i;
@@ -48,9 +41,7 @@ public class Main extends Application{
         }
         btns[i][j].setStyle("-fx-background-color: " + colour + ";");
 
-    }//end method
-    public static void drawPieces (){
-    }//end method
+    }
 
     static Board board = new Board();
 
@@ -157,7 +148,7 @@ public class Main extends Application{
     }
 
     public static void movePiece(int y, int x, int oldY, int oldX, String type, int color) {
-        
+
         // sketchy conversions
         x--;
         x = 7-x;
