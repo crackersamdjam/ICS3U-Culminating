@@ -156,8 +156,15 @@ public class Main extends Application{
         launch(args);
     }
 
-    public static void movePiece(int x, int y, int oldX, int oldY, String type, int color) {
-
+    public static void movePiece(int y, int x, int oldY, int oldX, String type, int color) {
+        
+        // sketchy conversions
+        x--;
+        x = 7-x;
+        y--;
+        oldX--;
+        oldX = 7-oldX;
+        oldY--;
 
         if (color == 0) {
             switch (type) {
@@ -215,6 +222,6 @@ public class Main extends Application{
                     return;
             }
         }
-        btns[oldX][oldY].setGraphic(new ImageView(null));
+        btns[oldX][oldY].setGraphic(new ImageView("null"));
     }
 }
