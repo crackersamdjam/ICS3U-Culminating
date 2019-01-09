@@ -167,7 +167,7 @@ public class Board{
             board[oldX][oldY] = empty;
             // this works
 
-            Main.movePiece(x, y, oldX, oldY);
+            Main.movePiece(x, y, oldX, oldY, board[x][y].type, board[x][y].colour);
             turn ^= 1;
 
             // reset castling
