@@ -2,12 +2,11 @@ package sample;
 
 public class Board{
 
+    static final int white = 0, black = 1;
     static Piece[][] board = new Piece[9][9];
     static boolean hasPieceSelected = false, moveCastle = false;
     static int oldX, oldY;
     static Piece empty = new Piece("null", -1, false);
-    static final int white = 0, black = 1;
-
     static int turn = white;
 
     // initialize stating position
@@ -42,6 +41,7 @@ public class Board{
         return board[x][y];
     }
 
+    // first find king location
     static boolean isCheck(){
         int x = -1, y = -1;
         for(int i = 1; i <= 8; i++){
@@ -53,20 +53,10 @@ public class Board{
                 }
             }
         }
-        if(x == -1){
-            System.out.println("ERROR turn = " + turn);
-        }
         return isCheck(x, y);
-        /*
-        for(int i = 1; i <= 8; i++){
-            for(int j = 1; j <= 8; j++){
-                if(board[i][j].colour != turn && board[i][j].isValid(i, j, x, y) && board[i][j].isLegal(i, j, x, y))
-                    return true;
-            }
-        }
-        return false;
-        */
     }
+
+    // using location x, y
     static boolean isCheck(int x, int y){
         for(int i = 1; i <= 8; i++){
             for(int j = 1; j <= 8; j++){
@@ -77,8 +67,7 @@ public class Board{
         return false;
     }
 
-    // check for stalement
-    // if stalement and check, then checkmate
+
     static boolean isStalemate(){
         // check making every move possible
         for(int i = 1; i <= 8; i++){
@@ -99,9 +88,11 @@ public class Board{
                                 board[i][j] = board[k][l].copy();
                                 board[k][l] = temp.copy();
 
-                                // if not check, then not checkmate
-                                if(!flag)
+                                // if not check after move, then not stalemate
+                                if(!flag){
+                                    System.out.printf("not stalemate %d %d --> %d %d\n", i, j, k, l);
                                     return false;
+                                }
                             }
                         }
                     }
@@ -125,7 +116,7 @@ public class Board{
 
             if(board[oldX][oldY].isCastle(oldX, oldY, x, y)){
                 if(x > oldX){
-                    //castling moves two squares
+                    // castling moves two squares
                     for(int i = oldX; i <= oldX+2; i++){
                         if(isCheck(i, y)){
                             System.out.println("no castle");
@@ -229,7 +220,6 @@ public class Board{
                 Piece.castleOp(black, true);
             }
 
-            // check if move resulted in checkmate
             if(isStalemate()){
 
                 // checkmate
@@ -237,7 +227,7 @@ public class Board{
                     int winner = turn ^ 1;
                     System.out.println((winner == white ? "White" : "Black") + " checkmated the opponent!");
                 }
-                //stalemate
+                // stalemate
                 else{
                     System.out.println(turn == white? "White": "Black" + " is stalemated!");
                 }
@@ -245,7 +235,7 @@ public class Board{
         }
         else{
             if(board[x][y].type.equals("null")){
-                System.out.println("nothing to select");
+                System.out.println("Nothing to select");
                 return;
             }
             if(board[x][y].colour != turn){

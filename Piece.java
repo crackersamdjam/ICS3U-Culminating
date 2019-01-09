@@ -31,24 +31,21 @@ public class Piece{
 
     // 0 queen, 1 king
     public static void castleOp(int colour, boolean side){
-        if(!side){
+        if(!side)
             queen[colour] = false;
-        }
-        else{
+        else
             king[colour] = false;
-        }
     }
 
     public boolean isCastle(int x, int y, int newX, int newY){
-        if(!type.equals("King")){
+        if(!type.equals("King"))
             return false;
-        }
+
         int ty = colour == white ? 1 : 8;
         if(y == ty && newY == ty && x == 5){
 
             // castle queenside
             if(newX == 3 && queen[colour]){
-
                 //must be empty between rook and king
                 for(int i = 2; i < 5; i++){
                     if(Board.get(i, ty).exist)
@@ -56,9 +53,9 @@ public class Piece{
                 }
                 return true;
             }
+
             // castle kingside
             else if(newX == 7 && king[colour]){
-
                 for(int i = 6; i <= 7; i++){
                     if(Board.get(i, ty).exist)
                         return false;
@@ -124,7 +121,7 @@ public class Piece{
                     }
 
                     //first move 2 squares
-                    if(newX == x && y == 2 && newY == 4 && !Board.get(x, 4).exist){
+                    if(newX == x && y == 2 && newY == 4 && !Board.get(x, 4).exist && !Board.get(x, 3).exist){
                         //set en passant
                         return true;
                     }
@@ -144,7 +141,7 @@ public class Piece{
                     }
 
                     //first move 2 squares
-                    if(newX == x && y == 7 && newY == 5 && !Board.get(x, 5).exist){
+                    if(newX == x && y == 7 && newY == 5 && !Board.get(x, 5).exist && !Board.get(x, 6).exist){
                         //set en passant
                         return true;
                     }
@@ -158,7 +155,6 @@ public class Piece{
                 return false;
 
             default:
-                System.out.println("This should not happen");
                 return false;
         }
     }
@@ -189,7 +185,7 @@ public class Piece{
                                 return false;
                     }
                     else{
-                        for(int i = x-1; i < newX; i--)
+                        for(int i = x-1; i > newX; i--)
                             if(Board.get(i, y).exist)
                                 return false;
                     }
@@ -251,7 +247,7 @@ public class Piece{
                                     return false;
                         }
                         else{
-                            for(int i = x-1; i < newX; i--)
+                            for(int i = x-1; i > newX; i--)
                                 if(Board.get(i, y).exist)
                                     return false;
                         }
