@@ -96,7 +96,6 @@ public class Board{
                             }
                         }
                     }
-
                 }
             }
         }
@@ -225,11 +224,11 @@ public class Board{
                 // checkmate
                 if(isCheck()){
                     int winner = turn ^ 1;
-                    System.out.println((winner == white ? "White" : "Black") + " checkmated the opponent!");
+                    Main.displayEnd((winner == white ? "White" : "Black") + " checkmated the opponent!");
                 }
                 // stalemate
                 else{
-                    System.out.println(turn == white? "White": "Black" + " is stalemated!");
+                    Main.displayEnd(turn == white? "White": "Black" + " is stalemated!");
                 }
             }
         }
