@@ -60,8 +60,10 @@ public class Board{
     static boolean isCheck(int x, int y){
         for(int i = 1; i <= 8; i++){
             for(int j = 1; j <= 8; j++){
-                if(board[i][j].colour != turn && board[i][j].isValid(i, j, x, y) && board[i][j].isLegal(i, j, x, y))
+                if(board[i][j].colour != turn && board[i][j].isValid(i, j, x, y) && board[i][j].isLegal(i, j, x, y)){
+                    System.out.println("piece at " + i + " " + j);
                     return true;
+                }
             }
         }
         return false;
@@ -89,10 +91,8 @@ public class Board{
                                 board[k][l] = temp.copy();
 
                                 // if not check after move, then not stalemate
-                                if(!flag){
-                                    System.out.printf("not stalemate %d %d --> %d %d\n", i, j, k, l);
+                                if(!flag)
                                     return false;
-                                }
                             }
                         }
                     }
@@ -163,6 +163,14 @@ public class Board{
                 return;
             }
 
+            // promotion
+            if(turn == white && y == 8 && board[x][y].type.equals("Pawn")){
+                Main.windowPromote(turn, x, y);
+            }
+            else if(turn == black && y == 1 && board[x][y].type.equals("Pawn")){
+                Main.windowPromote(turn, x, y);
+            }
+
             Main.movePiece(x, y, oldX, oldY, board[x][y].type, board[x][y].colour);
             turn ^= 1;
 
@@ -195,9 +203,6 @@ public class Board{
                         Main.movePiece(6, 8, 8, 8, "Rook", black);
                     }
                 }
-                //reset castling after
-                Piece.castleOp(turn, false);
-                Piece.castleOp(turn, true);
             }
             moveCastle = false;
 
@@ -246,5 +251,8 @@ public class Board{
             oldY = y;
             Main.setColour(x, y);
         }
+    }
+    public static void setPiece(int color, int x, int y, String choice){
+        board[x][y] = new Piece(choice, color, true);
     }
 }

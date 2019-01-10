@@ -114,7 +114,7 @@ public class Main extends Application{
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
-windowPromote(1);
+        windowPromote(white, 5, 5);
 
         AnimationTimer timer = new AnimationTimer(){
             @Override
@@ -144,7 +144,13 @@ windowPromote(1);
         newWindow.show();
     }
 
-    public static String windowPromote(int color){
+    static String choice = "foo";
+
+    public static String getChoice(){
+        return choice;
+    }
+
+    public static void windowPromote(int color, int x, int y){
 
         String type = "";
         Label label = new Label("Choose piece to promote to:");
@@ -191,31 +197,51 @@ windowPromote(1);
         newWindow.setScene(secondScene);
 
         newWindow.show();
-        String[] choice = {"test"};
 
-        Queen.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                choice[0] = "Queen";
+        Queen.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){
+                choice = "Queen";
+                System.out.println("choose queen");
                 newWindow.close();
+                setPiece(color, x, y, choice);
+                Board.setPiece(color, x, y, choice);
             }
         });
-        Queen.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                choice[0] = "Rook";
-                newWindow.close();            }
+        Rook.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){
+                choice = "Rook";
+                newWindow.close();
+                setPiece(color, x, y, choice);
+                Board.setPiece(color, x, y, choice);
+            }
         });
-        Bishop.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                choice[0] = "Bishop";
-                newWindow.close();            }
+        Bishop.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){
+                choice = "Bishop";
+                newWindow.close();
+                setPiece(color, x, y, choice);
+                Board.setPiece(color, x, y, choice);
+            }
         });
-        Knight.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                choice[0] = "Knight";
-                newWindow.close();            }
+        Knight.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){
+                choice = "Knight";
+                newWindow.close();
+                setPiece(color, x, y, choice);
+                Board.setPiece(color, x, y, choice);
+            }
         });
-        System.out.println(choice[0]);
-        return choice[0];
+    }
+
+    public static void setPiece(int color, int y, int x, String type) {
+        x--; x = 7-x; y--;
+        String colour_str = color == white? "white" : "black";
+        Image image = new Image(Main.class.getResourceAsStream("assets/" + type + "_" + colour_str + ".png"));
+        btns[x][y].setGraphic(new ImageView(image));
     }
 
     //move image to new button, delete old image from old button

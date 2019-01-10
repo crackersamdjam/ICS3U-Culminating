@@ -3,7 +3,7 @@ public class Piece{
 
     static final int white = 0, black = 1;
     static boolean[] king = {true, true}, queen = {true, true};
-    // white castle kingside, queenside, black ", " "
+    // colour
 
     String type;
     int colour;
@@ -25,12 +25,9 @@ public class Piece{
         return ret;
     }
 
-    private void promotion(Piece piece){
-
-    }
-
     // 0 queen, 1 king
     public static void castleOp(int colour, boolean side){
+        System.out.println("rm " + (colour == white? "white":"black") + " " + (side?"king":"queen"));
         if(!side)
             queen[colour] = false;
         else
@@ -114,11 +111,8 @@ public class Piece{
                 if(colour == white){
 
                     //normal move
-                    if(newX == x && newY == y+1 && !Board.get(x, y+1).exist){
-                        if(newY == 8)
-                            promotion(this);
+                    if(newX == x && newY == y+1 && !Board.get(x, y+1).exist)
                         return true;
-                    }
 
                     //first move 2 squares
                     if(newX == x && y == 2 && newY == 4 && !Board.get(x, 4).exist && !Board.get(x, 3).exist){
@@ -134,11 +128,8 @@ public class Piece{
                 }
                 else{
                     //normal move
-                    if(newX == x && newY == y-1 && !Board.get(x, y-1).exist){
-                        if(newY == 1)
-                            promotion(this);
+                    if(newX == x && newY == y-1 && !Board.get(x, y-1).exist)
                         return true;
-                    }
 
                     //first move 2 squares
                     if(newX == x && y == 7 && newY == 5 && !Board.get(x, 5).exist && !Board.get(x, 6).exist){
