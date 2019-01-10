@@ -25,15 +25,14 @@ public class Main extends Application{
     static Board board = new Board();
     static Button[][] btns = new Button[8][8];
 
-    public static void setColour (int j, int i){
+    public static void setColour(int j, int i){
         i--; i = 7-i; j--;
         btns[i][j].setStyle("-fx-background-color: " + "red" + ";");
     }
-    public static void rmColour (int j, int i){
+    public static void rmColour(int j, int i){
         i--; i = 7-i; j--;
         String colour = ((i+j)&1) == 1 ? "brown" : "beige";
         btns[i][j].setStyle("-fx-background-color: " + colour + ";");
-
     }
 
     @Override
@@ -49,12 +48,9 @@ public class Main extends Application{
                 board_button.add(button_square, j, i);
                 btns[i][j] = button_square;
                 int finalI = 7-i+1, finalJ = j+1;
-                // sketchy but works
                 btns[i][j].setOnAction(e -> Board.click(finalJ, finalI));
-
             }
         }
-
 
         Image rw = new Image(getClass().getResourceAsStream("assets/Rook_white.png"));
         btns[7][0].setGraphic(new ImageView(rw));
@@ -71,9 +67,8 @@ public class Main extends Application{
         btns[7][4].setGraphic(new ImageView(Kw));
 
         Image pw = new Image(getClass().getResourceAsStream("assets/Pawn_white.png"));
-        for (int i = 0; i <= 7; i++) {
+        for(int i = 0; i <= 7; i++)
             btns[6][i].setGraphic(new ImageView(pw));
-        }
 
         Image rb = new Image(getClass().getResourceAsStream("assets/Rook_black.png"));
         btns[0][0].setGraphic(new ImageView(rb));
@@ -90,10 +85,8 @@ public class Main extends Application{
         btns[0][4].setGraphic(new ImageView(Kb));
 
         Image pb = new Image(getClass().getResourceAsStream("assets/Pawn_black.png"));
-        for (int i = 0; i <= 7; i++) {
+        for(int i = 0; i <= 7; i++)
             btns[1][i].setGraphic(new ImageView(pb));
-
-        }
 
         TextField myTextField = new TextField();
         HBox hbox = new HBox(board_button);
@@ -125,7 +118,6 @@ public class Main extends Application{
 
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
 
     public static void displayEnd(String text){
@@ -144,7 +136,6 @@ public class Main extends Application{
         vbox.setSpacing(10);
 
         Scene secondScene = new Scene(vbox, 400, 150);
-        // New window (Stage)
         Stage newWindow = new Stage();
         newWindow.setTitle("End of Game");
         newWindow.setScene(secondScene);
@@ -152,18 +143,12 @@ public class Main extends Application{
         newWindow.show();
     }
 
-    static String choice = "foo";
-
-    public static String getChoice(){
-        return choice;
-    }
+    static String choice = "";
 
     public static void windowPromote(int color, int x, int y){
 
-        String type = "";
         Label label = new Label("Choose piece to promote to:");
         label.setFont(new Font("Times New Roman", 20));
-
 
         Button Queen = new Button();
         Button Rook = new Button();
@@ -179,10 +164,7 @@ public class Main extends Application{
         Knight.setPrefWidth(80);
         Knight.setPrefHeight(80);
 
-        if(color == 0)
-            type = "white";
-        else
-            type = "black";
+        String type = color == white? "white" : "black";
 
         Image a = new Image(Main.class.getResourceAsStream("assets/Rook_"+ type+ ".png"));
         Rook.setGraphic(new ImageView(a));
@@ -193,13 +175,10 @@ public class Main extends Application{
         Image d = new Image(Main.class.getResourceAsStream("assets/Queen_"+ type+ ".png"));
         Queen.setGraphic(new ImageView(d));
 
-
-        StackPane secondaryLayout = new StackPane();
         HBox hbox = new HBox(Queen, Rook, Bishop, Knight);
         hbox.setAlignment(Pos.BASELINE_CENTER);
 
         Scene secondScene = new Scene(hbox, 400, 150);
-        // New window (Stage)
         Stage newWindow = new Stage();
         newWindow.setTitle("Promotion!");
         newWindow.setScene(secondScene);
@@ -247,15 +226,14 @@ public class Main extends Application{
 
     public static void setPiece(int color, int y, int x, String type) {
         x--; x = 7-x; y--;
+
         String colour_str = color == white? "white" : "black";
         Image image = new Image(Main.class.getResourceAsStream("assets/" + type + "_" + colour_str + ".png"));
         btns[x][y].setGraphic(new ImageView(image));
     }
 
-    //move image to new button, delete old image from old button
     public static void movePiece(int y, int x, int oldY, int oldX, String type, int color) {
 
-        // sketchy conversions
         x--; x = 7-x; y--; oldX--; oldX = 7-oldX; oldY--;
 
         String colour_str = color == white? "white" : "black";
