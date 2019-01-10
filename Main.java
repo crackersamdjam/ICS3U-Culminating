@@ -114,7 +114,7 @@ public class Main extends Application{
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
-        displayEnd("CHECKMATE");
+        //displayEnd("CHECKMATE");
 
 
         AnimationTimer timer = new AnimationTimer(){
@@ -135,9 +135,7 @@ public class Main extends Application{
         Label secondLabel = new Label(text);
         StackPane secondaryLayout = new StackPane();
         secondaryLayout.getChildren().add(secondLabel);
-
         Scene secondScene = new Scene(secondaryLayout, 300, 100);
-
         // New window (Stage)
         Stage newWindow = new Stage();
         newWindow.setTitle("End of Game");
