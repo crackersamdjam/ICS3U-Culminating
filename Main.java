@@ -114,7 +114,6 @@ public class Main extends Application{
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
-        windowPromote(white, 5, 5);
 
         AnimationTimer timer = new AnimationTimer(){
             @Override
@@ -133,9 +132,18 @@ public class Main extends Application{
 
         Label label = new Label(text);
         label.setFont(new Font("Times New Roman", 20));
-        StackPane secondaryLayout = new StackPane();
-        secondaryLayout.getChildren().add(label);
-        Scene secondScene = new Scene(secondaryLayout, 400, 150);
+
+        Button button = new Button();
+        button.setPrefWidth(80);
+        button.setPrefHeight(40);
+        button.setText("Restart");
+
+        VBox vbox = new VBox(label, button);
+        vbox.setAlignment(Pos.CENTER);
+        //vbox.setPadding(new Insets(10, 50, 50, 50));
+        vbox.setSpacing(10);
+
+        Scene secondScene = new Scene(vbox, 400, 150);
         // New window (Stage)
         Stage newWindow = new Stage();
         newWindow.setTitle("End of Game");
