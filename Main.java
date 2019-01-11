@@ -35,9 +35,22 @@ public class Main extends Application{
         btns[i][j].setStyle("-fx-background-color: " + colour + ";");
     }
 
+    static GridPane board_button = new GridPane();
+
+    public static void flip(int colour){
+
+        int value = colour == white ? 0 : 180;
+
+        board_button.setRotate(value);
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 8; j++){
+                btns[i][j].setRotate(value);
+            }
+        }
+    }
+
     @Override
     public void start(Stage primaryStage){
-        GridPane board_button = new GridPane();
         for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
                 Button button_square = new Button();
@@ -92,10 +105,10 @@ public class Main extends Application{
         HBox hbox = new HBox(board_button);
         hbox.setPrefWidth(520);
         hbox.setPrefHeight(520);
+
         VBox vbox = new VBox(hbox);
         hbox.getChildren().add(myTextField);
         HBox.setHgrow(myTextField, Priority.ALWAYS);
-
 
         for(int i = 0; i < 8; i++){
             board_button.getColumnConstraints().add(new ColumnConstraints(80, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));

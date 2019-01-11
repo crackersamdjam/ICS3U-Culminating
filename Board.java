@@ -236,6 +236,9 @@ public class Board{
                     Main.displayEnd(turn == white? "White": "Black" + " is stalemated!");
                 }
             }
+            else{
+                Main.flip(turn);
+            }
         }
         else{
             if(board[x][y].type.equals("null")){
