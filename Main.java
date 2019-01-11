@@ -22,8 +22,8 @@ import javafx.stage.Stage;
 public class Main extends Application{
 
     static final int white = 0, black = 1;
-    static Board board = new Board();
     static Button[][] btns = new Button[8][8];
+    static GridPane board_button = new GridPane();
 
     public static void setColour(int j, int i){
         i--; i = 7-i; j--;
@@ -35,18 +35,58 @@ public class Main extends Application{
         btns[i][j].setStyle("-fx-background-color: " + colour + ";");
     }
 
-    static GridPane board_button = new GridPane();
-
     public static void flip(int colour){
-
         int value = colour == white ? 0 : 180;
-
         board_button.setRotate(value);
         for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
                 btns[i][j].setRotate(value);
             }
         }
+    }
+
+    public static void initGame(){
+        for(int i = 0; i < 8; i++)
+            for(int j = 0; j < 8; j++)
+                btns[i][j].setGraphic(null);
+        Image rw = new Image(Main.class.getResourceAsStream("assets/Rook_white.png"));
+        btns[7][0].setGraphic(new ImageView(rw));
+        btns[7][7].setGraphic(new ImageView(rw));
+        Image kw = new Image(Main.class.getResourceAsStream("assets/Knight_white.png"));
+        btns[7][1].setGraphic(new ImageView(kw));
+        btns[7][6].setGraphic(new ImageView(kw));
+        Image bw = new Image(Main.class.getResourceAsStream("assets/Bishop_white.png"));
+        btns[7][2].setGraphic(new ImageView(bw));
+        btns[7][5].setGraphic(new ImageView(bw));
+        Image Qw = new Image(Main.class.getResourceAsStream("assets/Queen_white.png"));
+        btns[7][3].setGraphic(new ImageView(Qw));
+        Image Kw = new Image(Main.class.getResourceAsStream("assets/King_white.png"));
+        btns[7][4].setGraphic(new ImageView(Kw));
+
+        Image pw = new Image(Main.class.getResourceAsStream("assets/Pawn_white.png"));
+        for(int i = 0; i <= 7; i++)
+            btns[6][i].setGraphic(new ImageView(pw));
+
+        Image rb = new Image(Main.class.getResourceAsStream("assets/Rook_black.png"));
+        btns[0][0].setGraphic(new ImageView(rb));
+        btns[0][7].setGraphic(new ImageView(rb));
+        Image kb = new Image(Main.class.getResourceAsStream("assets/Knight_black.png"));
+        btns[0][1].setGraphic(new ImageView(kb));
+        btns[0][6].setGraphic(new ImageView(kb));
+        Image bb = new Image(Main.class.getResourceAsStream("assets/Bishop_black.png"));
+        btns[0][2].setGraphic(new ImageView(bb));
+        btns[0][5].setGraphic(new ImageView(bb));
+        Image Qb = new Image(Main.class.getResourceAsStream("assets/Queen_black.png"));
+        btns[0][3].setGraphic(new ImageView(Qb));
+        Image Kb = new Image(Main.class.getResourceAsStream("assets/King_black.png"));
+        btns[0][4].setGraphic(new ImageView(Kb));
+
+        Image pb = new Image(Main.class.getResourceAsStream("assets/Pawn_black.png"));
+        for(int i = 0; i <= 7; i++)
+            btns[1][i].setGraphic(new ImageView(pb));
+
+        flip(white);
+        Board.initGame();
     }
 
     @Override
@@ -64,42 +104,8 @@ public class Main extends Application{
                 btns[i][j].setOnAction(e -> Board.click(finalJ, finalI));
             }
         }
-
-        Image rw = new Image(getClass().getResourceAsStream("assets/Rook_white.png"));
-        btns[7][0].setGraphic(new ImageView(rw));
-        btns[7][7].setGraphic(new ImageView(rw));
-        Image kw = new Image(getClass().getResourceAsStream("assets/Knight_white.png"));
-        btns[7][1].setGraphic(new ImageView(kw));
-        btns[7][6].setGraphic(new ImageView(kw));
-        Image bw = new Image(getClass().getResourceAsStream("assets/Bishop_white.png"));
-        btns[7][2].setGraphic(new ImageView(bw));
-        btns[7][5].setGraphic(new ImageView(bw));
-        Image Qw = new Image(getClass().getResourceAsStream("assets/Queen_white.png"));
-        btns[7][3].setGraphic(new ImageView(Qw));
-        Image Kw = new Image(getClass().getResourceAsStream("assets/King_white.png"));
-        btns[7][4].setGraphic(new ImageView(Kw));
-
-        Image pw = new Image(getClass().getResourceAsStream("assets/Pawn_white.png"));
-        for(int i = 0; i <= 7; i++)
-            btns[6][i].setGraphic(new ImageView(pw));
-
-        Image rb = new Image(getClass().getResourceAsStream("assets/Rook_black.png"));
-        btns[0][0].setGraphic(new ImageView(rb));
-        btns[0][7].setGraphic(new ImageView(rb));
-        Image kb = new Image(getClass().getResourceAsStream("assets/Knight_black.png"));
-        btns[0][1].setGraphic(new ImageView(kb));
-        btns[0][6].setGraphic(new ImageView(kb));
-        Image bb = new Image(getClass().getResourceAsStream("assets/Bishop_black.png"));
-        btns[0][2].setGraphic(new ImageView(bb));
-        btns[0][5].setGraphic(new ImageView(bb));
-        Image Qb = new Image(getClass().getResourceAsStream("assets/Queen_black.png"));
-        btns[0][3].setGraphic(new ImageView(Qb));
-        Image Kb = new Image(getClass().getResourceAsStream("assets/King_black.png"));
-        btns[0][4].setGraphic(new ImageView(Kb));
-
-        Image pb = new Image(getClass().getResourceAsStream("assets/Pawn_black.png"));
-        for(int i = 0; i <= 7; i++)
-            btns[1][i].setGraphic(new ImageView(pb));
+        // everything is reset
+        initGame();
 
         TextField myTextField = new TextField();
         HBox hbox = new HBox(board_button);
@@ -154,6 +160,16 @@ public class Main extends Application{
         newWindow.setScene(secondScene);
 
         newWindow.show();
+
+        button.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){
+                System.out.println("clicked restarted");
+                newWindow.close();
+                initGame();
+                // restart
+            }
+        });
     }
 
     static String choice = "";

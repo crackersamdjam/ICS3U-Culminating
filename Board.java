@@ -4,16 +4,16 @@ public class Board{
 
     static final int white = 0, black = 1;
     static Piece[][] board = new Piece[9][9];
-    static boolean hasPieceSelected = false, moveCastle = false;
+    static boolean hasPieceSelected, moveCastle;
     static int oldX, oldY;
     static Piece empty = new Piece("null", -1, false);
-    static int turn = white;
+    static int turn;
 
-    // initialize stating position
-    public Board(){
+
+    public static void initGame(){
         for(int i = 1; i <= 8; i++)
             for(int j = 1; j <= 8; j++)
-                board[i][j] = empty;
+               board[i][j] = empty;
         board[1][1] = new Piece("Rook", white, true);
         board[2][1] = new Piece("Knight", white, true);
         board[3][1] = new Piece("Bishop", white, true);
@@ -35,6 +35,11 @@ public class Board{
         board[8][8] = new Piece("Rook", black, true);
         for(int i = 1; i <= 8; i++)
             board[i][7] = new Piece("Pawn", black, true);
+
+        turn = white;
+        hasPieceSelected = false;
+        moveCastle = false;
+        Piece.reset();
     }
 
     static Piece get(int x, int y){

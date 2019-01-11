@@ -3,8 +3,11 @@ public class Piece{
 
     static final int white = 0, black = 1;
     static boolean[] king = {true, true}, queen = {true, true};
-    // colour
-
+    // white K, black K ...
+    public static void reset(){
+        king[0] = king[1] = queen[0] = queen[1] = true;
+    }
+    
     String type;
     int colour;
     // white = 0, black = 1
