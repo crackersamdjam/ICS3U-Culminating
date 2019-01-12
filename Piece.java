@@ -7,6 +7,18 @@ public class Piece{
     public static void reset(){
         king[0] = king[1] = queen[0] = queen[1] = true;
     }
+    public static void undoCastle(boolean[] a, boolean[] b){
+        king[0] = a[0];
+        king[1] = a[1];
+        queen[0] = b[0];
+        queen[1] = b[1];
+    }
+    public static boolean[] getKing(){
+        return king;
+    }
+    public static boolean[] getQueen(){
+        return queen;
+    }
     
     String type;
     int colour;

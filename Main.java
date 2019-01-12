@@ -17,6 +17,8 @@ import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import java.util.*;
+import java.io.*;
 
 
 public class Main extends Application{
@@ -111,6 +113,16 @@ public class Main extends Application{
         HBox hbox = new HBox(board_button);
         hbox.setPrefWidth(520);
         hbox.setPrefHeight(520);
+
+        //undo button
+        Button undoButton = new Button();
+        undoButton.setPrefWidth(120);
+        undoButton.setPrefHeight(80);
+        undoButton.setText("Undo");
+        undoButton.setOnAction(event -> Board.undo());
+        //undoButton.setStyle("-fx-background-color: red;");
+        hbox.getChildren().add(undoButton);
+        //end
 
         VBox vbox = new VBox(hbox);
         hbox.getChildren().add(myTextField);
@@ -255,6 +267,11 @@ public class Main extends Application{
 
     public static void setPiece(int color, int y, int x, String type) {
         x--; x = 7-x; y--;
+
+        if(type.equals("null")){
+            btns[x][y].setGraphic(null);
+            return;
+        }
 
         String colour_str = color == white? "white" : "black";
         Image image = new Image(Main.class.getResourceAsStream("assets/" + type + "_" + colour_str + ".png"));

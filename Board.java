@@ -1,5 +1,9 @@
 package sample;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+
 public class Board{
 
     static final int white = 0, black = 1;
@@ -7,8 +11,8 @@ public class Board{
     static boolean hasPieceSelected, moveCastle;
     static int oldX, oldY;
     static Piece empty = new Piece("null", -1, false);
-    static int turn;
-
+    static int turn, moveNum;
+    static ArrayDeque<Move> moveLog = new ArrayDeque<>();
 
     public static void initGame(){
         for(int i = 1; i <= 8; i++)
@@ -37,6 +41,7 @@ public class Board{
             board[i][7] = new Piece("Pawn", black, true);
 
         turn = white;
+        moveNum = 1;
         hasPieceSelected = false;
         moveCastle = false;
         Piece.reset();
@@ -107,6 +112,30 @@ public class Board{
         return true;
     }
 
+    static void undo(){
+
+        if(moveLog.isEmpty()){
+            System.out.println("empty");
+            return;
+        }
+
+        Move mv = moveLog.peekLast();
+        moveLog.pop();
+        System.out.printf("move was %d %d to %d %d\n", mv.startX, mv.startY, mv.endX, mv.endY);
+
+        board[mv.startX][mv.startY] = board[mv.endX][mv.endY].copy();
+        board[mv.endX][mv.endY] = mv.last.copy();
+
+        Main.setPiece(mv.colour, mv.startX, mv.startY, board[mv.startX][mv.startY].type);
+        Main.setPiece(mv.colour^1, mv.endX, mv.endY, mv.last.type);
+
+        Piece.undoCastle(mv.a, mv.b);
+
+        moveNum--;
+        turn ^= 1;
+        Main.flip(turn);
+    }
+
     static void click(int x, int y){
 
         char file = (char)(x+'a'-1);
@@ -167,6 +196,9 @@ public class Board{
                 board[x][y] = temp.copy();
                 return;
             }
+
+            // push to move log
+            moveLog.addLast(new Move(oldX, oldY, x, y, temp, moveNum, turn, Piece.getKing(), Piece.getQueen()));
 
             // promotion
             if(turn == white && y == 8 && board[x][y].type.equals("Pawn")){
@@ -235,15 +267,16 @@ public class Board{
                 if(isCheck()){
                     int winner = turn ^ 1;
                     Main.displayEnd((winner == white ? "White" : "Black") + " checkmated the opponent!");
+                    return;
                 }
                 // stalemate
                 else{
                     Main.displayEnd(turn == white? "White": "Black" + " is stalemated!");
+                    return;
                 }
             }
-            else{
-                Main.flip(turn);
-            }
+            Main.flip(turn);
+            moveNum++;
         }
         else{
             if(board[x][y].type.equals("null")){
