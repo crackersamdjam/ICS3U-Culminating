@@ -50,6 +50,10 @@ public class Board{
     static Piece get(int x, int y){
         return board[x][y];
     }
+    
+    public static int getTurn(){
+        return turn;
+    }
 
     // first find king location
     static boolean isCheck(){
@@ -120,7 +124,7 @@ public class Board{
         }
 
         Move mv = moveLog.peekLast();
-        moveLog.pop();
+        moveLog.pollLast();
         System.out.printf("move was %d %d to %d %d\n", mv.startX, mv.startY, mv.endX, mv.endY);
 
         board[mv.startX][mv.startY] = board[mv.endX][mv.endY].copy();
@@ -134,6 +138,13 @@ public class Board{
         moveNum--;
         turn ^= 1;
         Main.flip(turn);
+
+        Main.clearColour();
+        if(!moveLog.isEmpty()){
+            Move pre = moveLog.peekLast();
+            Main.setColour(pre.startX, pre.startY, false);
+            Main.setColour(pre.endX, pre.endY, false);
+        }
     }
 
     static void click(int x, int y){
@@ -209,6 +220,9 @@ public class Board{
             }
 
             Main.movePiece(x, y, oldX, oldY, board[x][y].type, board[x][y].colour);
+            Main.clearColour();
+            Main.setColour(oldX, oldY, false);
+            Main.setColour(x, y, false);
             turn ^= 1;
 
             // if castle, move rook as well
@@ -290,7 +304,7 @@ public class Board{
             hasPieceSelected = true;
             oldX = x;
             oldY = y;
-            Main.setColour(x, y);
+            Main.setColour(x, y, true);
         }
     }
     public static void setPiece(int color, int x, int y, String choice){
