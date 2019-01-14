@@ -165,7 +165,7 @@ public class Main extends Application{
 
         drawButton.setOnAction(e -> {
             offerDraw = true;
-            drawButton.setStyle("-fx-background-color: darkseagreen;");
+            drawButton.setStyle("-fx-background-color: lightcoral;");
             if(drawOffered)
                 displayEnd("Draw by agreement");
         });
