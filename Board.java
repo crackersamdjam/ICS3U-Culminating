@@ -50,7 +50,7 @@ public class Board{
     static Piece get(int x, int y){
         return board[x][y];
     }
-    
+
     public static int getTurn(){
         return turn;
     }
