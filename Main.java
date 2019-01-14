@@ -96,7 +96,8 @@ public class Main extends Application{
         Image pb = new Image(Main.class.getResourceAsStream("assets/Pawn_black.png"));
         for(int i = 0; i <= 7; i++)
             btns[1][i].setGraphic(new ImageView(pb));
-
+    
+        clearColour();
         flip(white);
         Board.initGame();
     }
