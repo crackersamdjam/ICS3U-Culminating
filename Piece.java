@@ -2,23 +2,6 @@ package sample;
 public class Piece{
 
     static final int white = 0, black = 1;
-    static boolean[] king = {true, true}, queen = {true, true};
-    // white K, black K ...
-    public static void reset(){
-        king[0] = king[1] = queen[0] = queen[1] = true;
-    }
-    public static void undoCastle(boolean[] a, boolean[] b){
-        king[0] = a[0];
-        king[1] = a[1];
-        queen[0] = b[0];
-        queen[1] = b[1];
-    }
-    public static boolean[] getKing(){
-        return king;
-    }
-    public static boolean[] getQueen(){
-        return queen;
-    }
     
     String type;
     int colour;
@@ -40,15 +23,6 @@ public class Piece{
         return ret;
     }
 
-    // 0 queen, 1 king
-    public static void castleOp(int colour, boolean side){
-        System.out.println("rm " + (colour == white? "white":"black") + " " + (side?"king":"queen"));
-        if(!side)
-            queen[colour] = false;
-        else
-            king[colour] = false;
-    }
-
     public boolean isCastle(int x, int y, int newX, int newY){
         if(!type.equals("King"))
             return false;
@@ -57,7 +31,7 @@ public class Piece{
         if(y == ty && newY == ty && x == 5){
 
             // castle queenside
-            if(newX == 3 && queen[colour]){
+            if(newX == 3 && Board.getQueen()[colour]){
                 //must be empty between rook and king
                 for(int i = 2; i < 5; i++){
                     if(Board.get(i, ty).exist)
@@ -67,7 +41,7 @@ public class Piece{
             }
 
             // castle kingside
-            else if(newX == 7 && king[colour]){
+            else if(newX == 7 && Board.getKing()[colour]){
                 for(int i = 6; i <= 7; i++){
                     if(Board.get(i, ty).exist)
                         return false;

@@ -26,13 +26,15 @@ public class Main extends Application{
     static GridPane board_button = new GridPane();
     static boolean drawOffered, offerDraw;
 
-    public static void setColour(int j, int i, boolean red){
+    public static void setColour(int j, int i, String colour){
         i--; i = 7-i; j--;
-        if(red)
-            btns[i][j].setStyle("-fx-background-color: darkseagreen ;");
+        if(colour.equals("green"))
+            btns[i][j].setStyle("-fx-background-color: darkseagreen;");
+        else if(colour.equals("red"))
+            btns[i][j].setStyle("-fx-background-color: red;");
         else{
-            String colour = ((i+j)&1) == 1 ? "darkkhaki" : "palegoldenrod";
-            btns[i][j].setStyle("-fx-background-color: " + colour + ";");
+            String temp = ((i+j)&1) == 1 ? "darkkhaki" : "palegoldenrod";
+            btns[i][j].setStyle("-fx-background-color: " + temp + ";");
         }
     }
     public static void rmColour(int j, int i){
@@ -165,7 +167,7 @@ public class Main extends Application{
 
         drawButton.setOnAction(e -> {
             offerDraw = true;
-            drawButton.setStyle("-fx-background-color: lightcoral;");
+            drawButton.setStyle("-fx-background-color: darkseagreen;");
             if(drawOffered)
                 displayEnd("Draw by agreement");
         });

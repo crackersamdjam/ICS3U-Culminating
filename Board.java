@@ -10,6 +10,44 @@ public class Board{
     static Piece empty = new Piece("null", -1, false);
     static int turn, moveNum;
     static ArrayDeque<Move> moveLog = new ArrayDeque<>();
+    static boolean[] king = {true, true}, queen = {true, true};
+    // white K, black K ...
+
+
+    public static void resetCastling(){
+        king[0] = king[1] = queen[0] = queen[1] = true;
+    }
+
+    public static void undoCastle(boolean[] a, boolean[] b){
+        king[0] = a[0];
+        king[1] = a[1];
+        queen[0] = b[0];
+        queen[1] = b[1];
+    }
+
+    public static boolean[] getKing(){
+        return king;
+    }
+    public static boolean[] getQueen(){
+        return queen;
+    }
+
+    public static boolean[] copy(boolean[] arr){
+        boolean[] temp = new boolean[2];
+        temp[0] = arr[0];
+        temp[1] = arr[1];
+        return temp;
+    }
+
+
+    // 0 queen, 1 king
+    public static void castleOp(int colour, boolean side){
+        System.out.println("rm " + (colour == white? "white":"black") + " " + (side?"king":"queen"));
+        if(!side)
+            queen[colour] = false;
+        else
+            king[colour] = false;
+    }
 
     public static void initGame(){
         for(int i = 1; i <= 8; i++)
@@ -41,7 +79,7 @@ public class Board{
         moveNum = 1;
         hasPieceSelected = false;
         moveCastle = false;
-        Piece.reset();
+        resetCastling();
     }
 
     static Piece get(int x, int y){
@@ -133,7 +171,7 @@ public class Board{
         Main.setPiece(mv.colour, mv.startX, mv.startY, board[mv.startX][mv.startY].type);
         Main.setPiece(mv.colour^1, mv.endX, mv.endY, mv.last.type);
 
-        Piece.undoCastle(mv.a, mv.b);
+        undoCastle(mv.a, mv.b);
 
         moveNum--;
         turn ^= 1;
@@ -142,8 +180,8 @@ public class Board{
         Main.clearColour();
         if(!moveLog.isEmpty()){
             Move pre = moveLog.peekLast();
-            Main.setColour(pre.startX, pre.startY, false);
-            Main.setColour(pre.endX, pre.endY, false);
+            Main.setColour(pre.startX, pre.startY, "");
+            Main.setColour(pre.endX, pre.endY, "");
         }
     }
 
@@ -209,7 +247,7 @@ public class Board{
             }
 
             // push to move log
-            moveLog.addLast(new Move(oldX, oldY, x, y, temp, moveNum, turn, Piece.getKing(), Piece.getQueen()));
+            moveLog.addLast(new Move(oldX, oldY, x, y, temp, moveNum, turn, copy(getKing()), copy(getQueen())));
 
             // promotion
             if(turn == white && y == 8 && board[x][y].type.equals("Pawn")){
@@ -221,10 +259,10 @@ public class Board{
 
             Main.movePiece(x, y, oldX, oldY, board[x][y].type, board[x][y].colour);
             Main.clearColour();
-            Main.setColour(oldX, oldY, false);
-            Main.setColour(x, y, false);
-            turn ^= 1;
+            Main.setColour(oldX, oldY, "");
+            Main.setColour(x, y, "");
             Main.cycleDraw();
+            turn ^= 1;
 
             // if castle, move rook as well
             if(moveCastle){
@@ -260,20 +298,32 @@ public class Board{
 
             // reset castling
             if(oldX == 1 && oldY == 1)
-                Piece.castleOp(white, false);
+                castleOp(white, false);
             else if(oldX == 8 && oldY == 1)
-                Piece.castleOp(white, true);
+                castleOp(white, true);
             else if(oldX == 1 && oldY == 8)
-                Piece.castleOp(black, false);
+                castleOp(black, false);
             else if(oldX == 8 && oldY == 8)
-                Piece.castleOp(black, true);
+                castleOp(black, true);
             else if(oldX == 5 && oldY == 1){
-                Piece.castleOp(white, false);
-                Piece.castleOp(white, true);
+                castleOp(white, false);
+                castleOp(white, true);
             }
             else if(oldX == 5 && oldY == 8){
-                Piece.castleOp(black, false);
-                Piece.castleOp(black, true);
+                castleOp(black, false);
+                castleOp(black, true);
+            }
+
+            if(isCheck()){
+                Outer:
+                for(int i = 1; i <= 8; i++){
+                    for(int j = 1; j <= 8; j++){
+                        if(board[i][j].colour == turn && board[i][j].type.equals("King")){
+                            Main.setColour(i, j, "red");
+                            break Outer;
+                        }
+                    }
+                }
             }
 
             if(isStalemate()){
@@ -305,7 +355,7 @@ public class Board{
             hasPieceSelected = true;
             oldX = x;
             oldY = y;
-            Main.setColour(x, y, true);
+            Main.setColour(x, y, "green");
         }
     }
     public static void setPiece(int color, int x, int y, String choice){
