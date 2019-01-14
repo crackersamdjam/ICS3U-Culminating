@@ -1,8 +1,5 @@
 package sample;
-
 import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
 
 public class Board{
 
@@ -123,6 +120,9 @@ public class Board{
             return;
         }
 
+        Main.cycleDraw();
+        Main.cycleDraw();
+
         Move mv = moveLog.peekLast();
         moveLog.pollLast();
         System.out.printf("move was %d %d to %d %d\n", mv.startX, mv.startY, mv.endX, mv.endY);
@@ -224,6 +224,7 @@ public class Board{
             Main.setColour(oldX, oldY, false);
             Main.setColour(x, y, false);
             turn ^= 1;
+            Main.cycleDraw();
 
             // if castle, move rook as well
             if(moveCastle){

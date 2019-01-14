@@ -17,8 +17,6 @@ import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import java.util.*;
-import java.io.*;
 
 
 public class Main extends Application{
@@ -193,7 +191,7 @@ public class Main extends Application{
         }
 
         Scene scene = new Scene(vbox, 1000, 640);
-        primaryStage.setTitle("assets/Shahmati");
+        primaryStage.setTitle("assets/Chess");
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
