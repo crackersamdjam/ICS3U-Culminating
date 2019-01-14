@@ -61,6 +61,7 @@ public class Main extends Application{
     static Button drawButton = new Button();
 
     public static void cycleDraw(){
+        drawButton.setStyle("fx-background-color: transparent;");
         drawOffered = offerDraw;
         offerDraw = false;
         drawButton.setText(drawOffered? "Accept Draw" : "Offer Draw");
@@ -166,6 +167,7 @@ public class Main extends Application{
 
         drawButton.setOnAction(e -> {
             offerDraw = true;
+            drawButton.setStyle("-fx-background-color: darkseagreen;");
             if(drawOffered)
                 displayEnd("Draw by agreement");
         });
