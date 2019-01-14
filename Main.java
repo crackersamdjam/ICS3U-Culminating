@@ -39,7 +39,7 @@ public class Main extends Application{
     }
     public static void rmColour(int j, int i){
         i--; i = 7-i; j--;
-        String colour = ((i+j)&1) == 1 ? "brown" : "beige";
+        String colour = ((i+j)&1) == 1 ? "sienna" : "blanchedalmond";
         btns[i][j].setStyle("-fx-background-color: " + colour + ";");
     }
     public static void clearColour(){
@@ -105,7 +105,7 @@ public class Main extends Application{
         Image pb = new Image(Main.class.getResourceAsStream("assets/Pawn_black.png"));
         for(int i = 0; i <= 7; i++)
             btns[1][i].setGraphic(new ImageView(pb));
-        
+
         cycleDraw();
         cycleDraw();
         clearColour();
@@ -118,7 +118,7 @@ public class Main extends Application{
         for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
                 Button button_square = new Button();
-                String colour = ((i+j)&1) == 1 ? "brown" : "beige";
+                String colour = ((i+j)&1) == 1 ? "sienna" : "blanchedalmond";
                 button_square.setStyle("-fx-background-color: " + colour + ";");
                 button_square.setPrefWidth(80);
                 button_square.setPrefHeight(80);
