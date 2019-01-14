@@ -114,14 +114,46 @@ public class Main extends Application{
         hbox.setPrefWidth(520);
         hbox.setPrefHeight(520);
 
+        final String[] color = {""};
+
         //undo button
         Button undoButton = new Button();
-        undoButton.setPrefWidth(120);
-        undoButton.setPrefHeight(80);
+        undoButton.setPrefWidth(100);
+        undoButton.setPrefHeight(60);
         undoButton.setText("Undo");
         undoButton.setOnAction(event -> Board.undo());
         //undoButton.setStyle("-fx-background-color: red;");
-        hbox.getChildren().add(undoButton);
+
+        Button resignButton = new Button();
+        resignButton.setPrefWidth(100);
+        resignButton.setPrefHeight(60);
+        resignButton.setText("Resign");
+        resignButton.setOnAction(event -> Board.undo());
+        resignButton.setOnAction(e -> {
+            if (Board.getTurn() == 1)
+                color[0] = "White";
+            else
+                color[0] = "Black";
+            String text = color[0] + " wins by resignation";
+            displayEnd(text);
+        });
+
+        Button drawButton = new Button();
+        drawButton.setPrefWidth(100);
+        drawButton.setPrefHeight(60);
+        drawButton.setText("Offer draw");
+
+        drawButton.setOnAction(e -> {displayEnd("Draw by agreement");});
+
+        VBox vbox_b = new VBox(undoButton, resignButton, drawButton);
+
+        hbox.getChildren().add(vbox_b);
+
+        vbox_b.setSpacing(10);
+
+        hbox.setSpacing(15);
+
+
         //end
 
         VBox vbox = new VBox(hbox);
