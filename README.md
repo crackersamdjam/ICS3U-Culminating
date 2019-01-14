@@ -12,3 +12,5 @@ Highlight previous move (green when selected, square to start, yellow for both s
 Move log
 
 Pgn format
+
+https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor
