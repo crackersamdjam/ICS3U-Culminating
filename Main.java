@@ -26,6 +26,7 @@ public class Main extends Application{
     static final int white = 0, black = 1;
     static Button[][] btns = new Button[8][8];
     static GridPane board_button = new GridPane();
+    static boolean drawOffered, offerDraw;
 
     public static void setColour(int j, int i, boolean red){
         i--; i = 7-i; j--;
@@ -55,6 +56,14 @@ public class Main extends Application{
                 btns[i][j].setRotate(value);
             }
         }
+    }
+
+    static Button drawButton = new Button();
+
+    public static void cycleDraw(){
+        drawOffered = offerDraw;
+        offerDraw = false;
+        drawButton.setText(drawOffered? "Accept Draw" : "Offer Draw");
     }
 
     public static void initGame(){
@@ -96,7 +105,9 @@ public class Main extends Application{
         Image pb = new Image(Main.class.getResourceAsStream("assets/Pawn_black.png"));
         for(int i = 0; i <= 7; i++)
             btns[1][i].setGraphic(new ImageView(pb));
-    
+        
+        cycleDraw();
+        cycleDraw();
         clearColour();
         flip(white);
         Board.initGame();
@@ -149,12 +160,15 @@ public class Main extends Application{
             displayEnd(text);
         });
 
-        Button drawButton = new Button();
         drawButton.setPrefWidth(100);
         drawButton.setPrefHeight(60);
         drawButton.setText("Offer draw");
 
-        drawButton.setOnAction(e -> {displayEnd("Draw by agreement");});
+        drawButton.setOnAction(e -> {
+            offerDraw = true;
+            if(drawOffered)
+                displayEnd("Draw by agreement");
+        });
 
         VBox vbox_b = new VBox(undoButton, resignButton, drawButton);
 
