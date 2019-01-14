@@ -27,14 +27,24 @@ public class Main extends Application{
     static Button[][] btns = new Button[8][8];
     static GridPane board_button = new GridPane();
 
-    public static void setColour(int j, int i){
+    public static void setColour(int j, int i, boolean red){
         i--; i = 7-i; j--;
-        btns[i][j].setStyle("-fx-background-color: " + "red" + ";");
+        if(red)
+            btns[i][j].setStyle("-fx-background-color: darkseagreen ;");
+        else{
+            String colour = ((i+j)&1) == 1 ? "darkkhaki" : "palegoldenrod";
+            btns[i][j].setStyle("-fx-background-color: " + colour + ";");
+        }
     }
     public static void rmColour(int j, int i){
         i--; i = 7-i; j--;
         String colour = ((i+j)&1) == 1 ? "brown" : "beige";
         btns[i][j].setStyle("-fx-background-color: " + colour + ";");
+    }
+    public static void clearColour(){
+        for(int i = 1; i <= 8; i++)
+            for(int j = 1; j <= 8; j++)
+                rmColour(i, j);
     }
 
     public static void flip(int colour){
