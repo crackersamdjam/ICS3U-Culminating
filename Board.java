@@ -171,6 +171,22 @@ public class Board{
         Main.setPiece(mv.colour, mv.startX, mv.startY, board[mv.startX][mv.startY].type);
         Main.setPiece(mv.colour^1, mv.endX, mv.endY, mv.last.type);
 
+        int rank = board[mv.startX][mv.startY].colour == white? 1: 8;
+        if(board[mv.startX][mv.startY].type.equals("King") && mv.startX == 5 && mv.startY == rank){
+            if(mv.endX == 7){
+                board[8][rank] = board[6][rank].copy();
+                board[6][rank] = empty;
+                Main.setPiece(-1, 6, rank, "null");
+                Main.setPiece(mv.colour, 8, rank, "Rook");
+            }
+            else if(mv.endX == 3){
+                board[1][rank] = board[4][rank].copy();
+                board[4][rank] = empty;
+                Main.setPiece(-1, 4, rank, "null");
+                Main.setPiece(mv.colour, 1, rank, "Rook");
+            }
+        }
+
         undoCastle(mv.a, mv.b);
 
         moveNum--;

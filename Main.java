@@ -180,9 +180,6 @@ public class Main extends Application{
 
         hbox.setSpacing(15);
 
-
-        //end
-
         VBox vbox = new VBox(hbox);
         hbox.getChildren().add(myTextField);
         HBox.setHgrow(myTextField, Priority.ALWAYS);
@@ -193,7 +190,7 @@ public class Main extends Application{
         }
 
         Scene scene = new Scene(vbox, 1000, 640);
-        primaryStage.setTitle("assets/Chess");
+        primaryStage.setTitle("Chess");
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
