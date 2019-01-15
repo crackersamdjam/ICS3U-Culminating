@@ -151,6 +151,11 @@ public class Board{
         return true;
     }
 
+    public static void popAll(){
+        while(!moveLog.isEmpty())
+            moveLog.pop();
+    }
+
     static void undo(){
 
         if(moveLog.isEmpty()){

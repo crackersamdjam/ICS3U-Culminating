@@ -68,6 +68,7 @@ public class Main extends Application{
     }
 
     public static void initGame(){
+        Board.popAll();
         for(int i = 0; i < 8; i++)
             for(int j = 0; j < 8; j++)
                 btns[i][j].setGraphic(null);
