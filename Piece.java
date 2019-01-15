@@ -2,14 +2,10 @@ package sample;
 public class Piece{
 
     static final int white = 0, black = 1;
-    
     String type;
     int colour;
-    // white = 0, black = 1
-    // numbers can be XOR'd
-
+    // white = 0, black = 1     so that numbers can be XOR'd
     boolean exist;
-    // when captured, exist = false
 
     // Constructor
     public Piece(String type, int colour, boolean exist){
@@ -66,10 +62,8 @@ public class Piece{
 
         switch(type){
 
-
             case "Rook":
                 return (newX == x || newY == y);
-
 
             case "Knight":
                 if(Math.abs(x - newX) == 1 && Math.abs(y - newY) == 2)
@@ -78,10 +72,8 @@ public class Piece{
                     return true;
                 return false;
 
-
             case "Bishop":
                 return Math.abs(x - newX) == Math.abs(y - newY);
-
 
             case "Queen":
                 if (newX == x || newY == y)
@@ -91,11 +83,9 @@ public class Piece{
 
                 return false;
 
-
             case "King":
                 return (Math.abs(x - newX) <= 1 && Math.abs(y - newY) <= 1);
 
-                
             case "Pawn":
                 if(colour == white){
 

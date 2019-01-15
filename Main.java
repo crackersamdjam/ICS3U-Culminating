@@ -1,5 +1,4 @@
 package sample;
-import javafx.scene.Group;
 import javafx.event.*;
 import javafx.application.Application;
 import javafx.scene.image.Image;
@@ -7,15 +6,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.animation.AnimationTimer;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.text.Text;
 import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.shape.*;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 
@@ -213,12 +208,12 @@ public class Main extends Application{
         Label label = new Label(text);
         label.setFont(new Font("Times New Roman", 20));
 
-        Button button = new Button();
-        button.setPrefWidth(80);
-        button.setPrefHeight(40);
-        button.setText("Restart");
+        Button restartButton = new Button();
+        restartButton.setPrefWidth(80);
+        restartButton.setPrefHeight(40);
+        restartButton.setText("Restart");
 
-        VBox vbox = new VBox(label, button);
+        VBox vbox = new VBox(label, restartButton);
         vbox.setAlignment(Pos.CENTER);
         //vbox.setPadding(new Insets(10, 50, 50, 50));
         vbox.setSpacing(10);
@@ -230,13 +225,12 @@ public class Main extends Application{
 
         newWindow.show();
 
-        button.setOnAction(new EventHandler<ActionEvent>(){
+        restartButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent e){
                 System.out.println("clicked restarted");
                 newWindow.close();
                 initGame();
-                // restart
             }
         });
     }

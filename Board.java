@@ -6,9 +6,8 @@ public class Board{
     static final int white = 0, black = 1;
     static Piece[][] board = new Piece[9][9];
     static boolean hasPieceSelected, moveCastle;
-    static int oldX, oldY;
+    static int oldX, oldY, turn, moveNum;
     static Piece empty = new Piece("null", -1, false);
-    static int turn, moveNum;
     static ArrayDeque<Move> moveLog = new ArrayDeque<>();
     static boolean[] king = {true, true}, queen = {true, true};
     // white K, black K ...
@@ -38,7 +37,6 @@ public class Board{
         temp[1] = arr[1];
         return temp;
     }
-
 
     // 0 queen, 1 king
     public static void castleOp(int colour, boolean side){
@@ -82,6 +80,10 @@ public class Board{
         resetCastling();
     }
 
+    public static void setPiece(int color, int x, int y, String choice){
+        board[x][y] = new Piece(choice, color, true);
+    }
+
     static Piece get(int x, int y){
         return board[x][y];
     }
@@ -109,10 +111,8 @@ public class Board{
     static boolean isCheck(int x, int y){
         for(int i = 1; i <= 8; i++){
             for(int j = 1; j <= 8; j++){
-                if(board[i][j].colour != turn && board[i][j].isValid(i, j, x, y) && board[i][j].isLegal(i, j, x, y)){
-                    System.out.println("piece at " + i + " " + j);
+                if(board[i][j].colour != turn && board[i][j].isValid(i, j, x, y) && board[i][j].isLegal(i, j, x, y))
                     return true;
-                }
             }
         }
         return false;
@@ -159,7 +159,7 @@ public class Board{
     static void undo(){
 
         if(moveLog.isEmpty()){
-            System.out.println("empty");
+            System.out.println("nothing to undo");
             return;
         }
 
@@ -168,7 +168,6 @@ public class Board{
 
         Move mv = moveLog.peekLast();
         moveLog.pollLast();
-        System.out.printf("move was %d %d to %d %d\n", mv.startX, mv.startY, mv.endX, mv.endY);
 
         board[mv.startX][mv.startY] = board[mv.endX][mv.endY].copy();
         board[mv.endX][mv.endY] = mv.last.copy();
@@ -208,9 +207,6 @@ public class Board{
 
     static void click(int x, int y){
 
-        char file = (char)(x+'a'-1);
-        System.out.println("click " + file + y);
-
         if(hasPieceSelected){
             // moving to this square
 
@@ -222,7 +218,7 @@ public class Board{
                     // castling moves two squares
                     for(int i = oldX; i <= oldX+2; i++){
                         if(isCheck(i, y)){
-                            System.out.println("no castle");
+                            System.out.println("can not castle");
                             return;
                         }
                     }
@@ -230,7 +226,7 @@ public class Board{
                 else{
                     for(int i = oldX; i >= oldX-2; i--){
                         if(isCheck(i, y)){
-                            System.out.println("no castle");
+                            System.out.println("can not castle");
                             return;
                         }
                     }
@@ -378,8 +374,5 @@ public class Board{
             oldY = y;
             Main.setColour(x, y, "green");
         }
-    }
-    public static void setPiece(int color, int x, int y, String choice){
-        board[x][y] = new Piece(choice, color, true);
     }
 }
