@@ -175,22 +175,34 @@ public class Main extends Application{
 
         VBox vbox_b = new VBox(undoButton, resignButton, drawButton);
 
-        hbox.getChildren().add(vbox_b);
+        Label label = new Label("\n Chess!");
+        label.setFont(new Font("Times New Roman", 20));
+
+        //VBox vbox_c = new VBox(label);
+        ScrollPane sp = new ScrollPane();
+
+        sp.setContent(label);
+        sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+
+        //vbox.setPrefSize(400, 500);// prefWidth, prefHeight
+        sp.setPrefWidth(240);// prefWidth, prefHeight
 
         vbox_b.setSpacing(10);
-
+        //vbox_c.setSpacing(10);
         hbox.setSpacing(15);
 
-        VBox vbox = new VBox(hbox);
-        hbox.getChildren().add(myTextField);
-        HBox.setHgrow(myTextField, Priority.ALWAYS);
+        //vbox_c.setStyle("-fx-background-color: #d3d3d3;");
+
+        hbox.setSpacing(10);
+        hbox.getChildren().addAll(vbox_b, sp);
 
         for(int i = 0; i < 8; i++){
             board_button.getColumnConstraints().add(new ColumnConstraints(80, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
             board_button.getRowConstraints().add(new RowConstraints(80, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true));
         }
 
-        Scene scene = new Scene(vbox, 1000, 640);
+        Scene scene = new Scene(hbox, 1000, 640);
         primaryStage.setTitle("Chess");
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
