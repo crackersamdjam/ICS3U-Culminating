@@ -53,9 +53,6 @@ public class Move{
                     pgnf = pgnf + "K";
                     break;
                 case "Pawn":
-                    if(startX != endX){
-                        pgnf = pgnf + (char)(startX+'a'-1) + "x";
-                    }
                     break;
                 default:
                     pgnf = pgnf + "error";

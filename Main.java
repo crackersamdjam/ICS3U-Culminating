@@ -114,6 +114,12 @@ public class Main extends Application{
         Board.initGame();
     }
 
+    static Label log = new Label("");
+
+    public static void setText(String str){
+        log.setText(str);
+    }
+
     @Override
     public void start(Stage primaryStage){
         for(int i = 0; i < 8; i++){
@@ -175,24 +181,19 @@ public class Main extends Application{
 
         VBox vbox_b = new VBox(undoButton, resignButton, drawButton);
 
-        Label label = new Label("\n Chess!");
-        label.setFont(new Font("Times New Roman", 20));
+        // Times does not look nice
+        //log.setFont(new Font("Times New Roman", 20));
 
-        //VBox vbox_c = new VBox(label);
         ScrollPane sp = new ScrollPane();
 
-        sp.setContent(label);
+        sp.setContent(log);
         sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
-        //vbox.setPrefSize(400, 500);// prefWidth, prefHeight
-        sp.setPrefWidth(240);// prefWidth, prefHeight
+        sp.setPrefWidth(240);
 
         vbox_b.setSpacing(10);
-        //vbox_c.setSpacing(10);
         hbox.setSpacing(15);
-
-        //vbox_c.setStyle("-fx-background-color: #d3d3d3;");
 
         hbox.setSpacing(10);
         hbox.getChildren().addAll(vbox_b, sp);

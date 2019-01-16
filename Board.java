@@ -255,6 +255,8 @@ public class Board{
             Main.setColour(pre.startX, pre.startY, "");
             Main.setColour(pre.endX, pre.endY, "");
         }
+
+        Main.setText(printPgn());
     }
 
     // method called when square x, y is clicked
@@ -410,6 +412,9 @@ public class Board{
             }
             Main.flip(turn);
             moveNum++;
+
+            Main.setText(printPgn());
+
         }
         else{
             if(board[x][y].type.equals("null")){
