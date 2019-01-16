@@ -1,5 +1,4 @@
 package sample;
-import javafx.scene.Group;
 import javafx.event.*;
 import javafx.application.Application;
 import javafx.scene.image.Image;
@@ -7,15 +6,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.animation.AnimationTimer;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.text.Text;
 import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.shape.*;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 
@@ -26,13 +21,15 @@ public class Main extends Application{
     static GridPane board_button = new GridPane();
     static boolean drawOffered, offerDraw;
 
-    public static void setColour(int j, int i, boolean red){
+    public static void setColour(int j, int i, String colour){
         i--; i = 7-i; j--;
-        if(red)
-            btns[i][j].setStyle("-fx-background-color: darkseagreen ;");
+        if(colour.equals("green"))
+            btns[i][j].setStyle("-fx-background-color: darkseagreen;");
+        else if(colour.equals("red"))
+            btns[i][j].setStyle("-fx-background-color: red;");
         else{
-            String colour = ((i+j)&1) == 1 ? "darkkhaki" : "palegoldenrod";
-            btns[i][j].setStyle("-fx-background-color: " + colour + ";");
+            String temp = ((i+j)&1) == 1 ? "darkkhaki" : "palegoldenrod";
+            btns[i][j].setStyle("-fx-background-color: " + temp + ";");
         }
     }
     public static void rmColour(int j, int i){
@@ -66,6 +63,11 @@ public class Main extends Application{
     }
 
     public static void initGame(){
+
+        //testing pgn format
+        System.out.println(Board.printPgn());
+
+        Board.popAll();
         for(int i = 0; i < 8; i++)
             for(int j = 0; j < 8; j++)
                 btns[i][j].setGraphic(null);
@@ -127,9 +129,11 @@ public class Main extends Application{
                 btns[i][j].setOnAction(e -> Board.click(finalJ, finalI));
             }
         }
+
         // everything is reset
         initGame();
 
+        TextField myTextField = new TextField();
         HBox hbox = new HBox(board_button);
         hbox.setPrefWidth(520);
         hbox.setPrefHeight(520);
@@ -164,44 +168,30 @@ public class Main extends Application{
 
         drawButton.setOnAction(e -> {
             offerDraw = true;
-            drawButton.setStyle("-fx-background-color: lightcoral;");
+            drawButton.setStyle("-fx-background-color: darkseagreen;");
             if(drawOffered)
                 displayEnd("Draw by agreement");
         });
 
         VBox vbox_b = new VBox(undoButton, resignButton, drawButton);
 
-        Label label = new Label("\n Chess!");
-        label.setFont(new Font("Times New Roman", 20));
-
-        //VBox vbox_c = new VBox(label);
-        ScrollPane sp = new ScrollPane();
-
-        sp.setContent(label);
-        sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-
-        //vbox.setPrefSize(400, 500);// prefWidth, prefHeight
-        sp.setPrefWidth(240);// prefWidth, prefHeight
+        hbox.getChildren().add(vbox_b);
 
         vbox_b.setSpacing(10);
-        //vbox_c.setSpacing(10);
+
         hbox.setSpacing(15);
 
-        //vbox_c.setStyle("-fx-background-color: #d3d3d3;");
-
-        hbox.setSpacing(10);
-        hbox.getChildren().addAll(vbox_b, sp);
-
-
+        VBox vbox = new VBox(hbox);
+        hbox.getChildren().add(myTextField);
+        HBox.setHgrow(myTextField, Priority.ALWAYS);
 
         for(int i = 0; i < 8; i++){
             board_button.getColumnConstraints().add(new ColumnConstraints(80, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
             board_button.getRowConstraints().add(new RowConstraints(80, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true));
         }
 
-        Scene scene = new Scene(hbox, 1000, 640);
-        primaryStage.setTitle("assets/Chess");
+        Scene scene = new Scene(vbox, 1000, 640);
+        primaryStage.setTitle("Chess");
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -213,23 +203,22 @@ public class Main extends Application{
             }
         };
         timer.start();
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
-
 
     public static void displayEnd(String text){
 
         Label label = new Label(text);
         label.setFont(new Font("Times New Roman", 20));
 
-        Button button = new Button();
-        button.setPrefWidth(80);
-        button.setPrefHeight(40);
-        button.setText("Restart");
+        Button restartButton = new Button();
+        restartButton.setPrefWidth(80);
+        restartButton.setPrefHeight(40);
+        restartButton.setText("Restart");
 
-        VBox vbox = new VBox(label, button);
+        VBox vbox = new VBox(label, restartButton);
         vbox.setAlignment(Pos.CENTER);
         //vbox.setPadding(new Insets(10, 50, 50, 50));
         vbox.setSpacing(10);
@@ -241,13 +230,12 @@ public class Main extends Application{
 
         newWindow.show();
 
-        button.setOnAction(new EventHandler<ActionEvent>(){
+        restartButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent e){
                 System.out.println("clicked restarted");
                 newWindow.close();
                 initGame();
-                // restart
             }
         });
     }
@@ -358,5 +346,9 @@ public class Main extends Application{
 
     public static void main(String[] args){
         launch(args);
+    }
+
+    public static void exportPgn(){
+
     }
 }

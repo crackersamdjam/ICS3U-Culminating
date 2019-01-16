@@ -8,9 +8,12 @@ public class Move{
     boolean[] a, b;
     // castling conditions (see Board.java)
 
+    String pgnf;
+    // pgn format of move
+
     // constructor
-    public Move(int startX, int startY, int endX, int endY, Piece last,
-                int num, int colour, boolean[] a, boolean[] b){
+    public Move(int startX, int startY, int endX, int endY, Piece last, Piece current,
+                int num, int colour, boolean[] a, boolean[] b, int duplicate){
         this.startX = startX;
         this.startY = startY;
         this.endX = endX;
@@ -20,5 +23,64 @@ public class Move{
         this.colour = colour;
         this.a = a;
         this.b = b;
+
+        // everything below here is for the standard pgn format of chess games
+
+        pgnf = "" + this.num + ". ";
+
+        // castled
+        if(current.type.equals("King") && Math.abs(startX - endX) == 2){
+            if(endX == 3)
+                pgnf = pgnf + "O-O-O";
+            else
+                pgnf = pgnf + "O-O";
+        }
+        else{
+            switch(current.type){
+                case "Rook":
+                    pgnf = pgnf + "R";
+                    break;
+                case "Knight":
+                    pgnf = pgnf + "N";
+                    break;
+                case "Bishop":
+                    pgnf = pgnf + "B";
+                    break;
+                case "Queen":
+                    pgnf = pgnf + "Q";
+                    break;
+                case "King":
+                    pgnf = pgnf + "K";
+                    break;
+                case "Pawn":
+                    if(startX != endX){
+                        pgnf = pgnf + (char)(startX+'a'-1) + "x";
+                    }
+                    break;
+                default:
+                    pgnf = pgnf + "error";
+                    break;
+            }
+
+            if(duplicate == 1){
+                //file
+                pgnf = pgnf + (char)(startX+'a'-1);
+            }
+            else if(duplicate == 2){
+                //rank
+                pgnf = pgnf + startY;
+            }
+
+            // if capture, add 'x'
+            if(last.exist)
+                pgnf = pgnf + "x";
+
+            pgnf = pgnf + (char)(endX+'a'-1) + "" + endY;
+        }
+
+        if(colour == 0)
+            pgnf = pgnf + "  ";
+        else
+            pgnf = pgnf + "\n";
     }
 }

@@ -1,5 +1,6 @@
 package sample;
 import java.util.ArrayDeque;
+import java.util.HashMap;
 
 public class Board{
 
@@ -56,7 +57,6 @@ public class Board{
 
     // remove the option of castling for player 'colour' and to the 'side' side
     public static void castleOp(int colour, boolean side){
-        System.out.println("rm " + (colour == white? "white":"black") + " " + (side?"king":"queen"));
         if(!side)
             queen[colour] = false;
         else
@@ -177,6 +177,37 @@ public class Board{
             moveLog.pop();
     }
 
+    // return movelog as String
+    public static String printPgn(){
+        String str = "";
+        for(Move mv: moveLog){
+            str = str + mv.pgnf;
+        }
+        return str;
+    }
+
+    // whether square x, y is reachable by another piece with same type and colour
+    // this is used when deciding whether extra number or letter is required for pgn format
+    public static int reachable(int x, int y, String type, int colour, int oldX, int oldY){
+        for(int i = 1; i <= 8; i++){
+            for(int j = 1; j <= 8; j++){
+                if(i == oldX && j == oldY)
+                    continue;
+                if(board[i][j].type.equals(type) && board[i][j].colour == colour){
+                    if(board[i][j].isLegal(i, j, x, y) && board[i][j].isValid(i, j, x, y)){
+                        //file
+                        if(j == y)
+                            return 1;
+                        else
+                            return 2;
+                        //rank
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
     // undo last move
     static void undo(){
         if(moveLog.isEmpty()){
@@ -239,18 +270,14 @@ public class Board{
                 if(x > oldX){
                     // castling moves two squares
                     for(int i = oldX; i <= oldX+2; i++){
-                        if(isCheck(i, y)){
-                            System.out.println("can not castle");
+                        if(isCheck(i, y))
                             return;
-                        }
                     }
                 }
                 else{
                     for(int i = oldX; i >= oldX-2; i--){
-                        if(isCheck(i, y)){
-                            System.out.println("can not castle");
+                        if(isCheck(i, y))
                             return;
-                        }
                     }
                 }
                 moveCastle = true;
@@ -270,6 +297,8 @@ public class Board{
                 }
             }
 
+            int duplicate = reachable(x, y, board[oldX][oldY].type, board[oldX][oldY].colour, oldX, oldY);
+
             // move the piece
             Piece temp = board[x][y].copy();
             board[x][y] = board[oldX][oldY].copy();
@@ -286,7 +315,7 @@ public class Board{
             }
 
             // push to move log
-            moveLog.addLast(new Move(oldX, oldY, x, y, temp, moveNum, turn, copy(getKing()), copy(getQueen())));
+            moveLog.addLast(new Move(oldX, oldY, x, y, temp, board[x][y], moveNum, turn, copy(getKing()), copy(getQueen()), duplicate));
 
             // promotion
             if(turn == white && y == 8 && board[x][y].type.equals("Pawn")){
