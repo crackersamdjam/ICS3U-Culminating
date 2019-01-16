@@ -2,10 +2,16 @@ package sample;
 public class Piece{
 
     static final int white = 0, black = 1;
+    // colour of piece
+
     String type;
+    // type of piece
+
     int colour;
-    // white = 0, black = 1     so that numbers can be XOR'd
+    // white = 0, black = 1     this is done so that numbers can be XOR'd
+
     boolean exist;
+    // whether the piece exists
 
     // Constructor
     public Piece(String type, int colour, boolean exist){
@@ -14,15 +20,18 @@ public class Piece{
         this.exist = exist;
     }
 
+   // copies Piece by value
     public Piece copy(){
         Piece ret = new Piece(type, colour, exist);
         return ret;
     }
 
+    // whether the user tried to castle & can castle
     public boolean isCastle(int x, int y, int newX, int newY){
         if(!type.equals("King"))
             return false;
 
+        // rank of pieces depending on player colour
         int ty = colour == white ? 1 : 8;
         if(y == ty && newY == ty && x == 5){
 
@@ -48,6 +57,7 @@ public class Piece{
         return false;
     }
 
+    // whether piece is able to make the move
     public boolean isValid(int x, int y, int newX, int newY){
 
         if(!exist)
@@ -129,12 +139,13 @@ public class Piece{
         }
     }
 
+    // whether the piece and make the move without jumping over other pieces
+    // no need to check pawn, knight, king  - no way of jumping over other pieces
     public boolean isLegal(int x, int y, int newX, int newY){
-
-        //no need to check pawn, knight, king  - no way of jumping over other pieces
 
         switch(this.type){
 
+            //checks rank and file
             case "Rook":
                 if(x == newX){
                     if(newY > y){
@@ -162,6 +173,7 @@ public class Piece{
                 }
                 break;
 
+            // checks diagonal
             case "Bishop":
                 if(newX > x){
                     if(newY > y){
@@ -193,7 +205,7 @@ public class Piece{
                 }
                 break;
 
-
+            // reused bishop and rook code
             case "Queen":
                 if(x == newX || y == newY){
                     // same code as for rook

@@ -4,19 +4,32 @@ import java.util.ArrayDeque;
 public class Board{
 
     static final int white = 0, black = 1;
+    // player colours
+
     static Piece[][] board = new Piece[9][9];
+    // board
+
     static boolean hasPieceSelected, moveCastle;
+    // whether a piece has been selected; whether use intended to castle
+
     static int oldX, oldY, turn, moveNum;
+    // previous x, y; who's turn; move number
+
     static Piece empty = new Piece("null", -1, false);
+    // empty piece
+
     static ArrayDeque<Move> moveLog = new ArrayDeque<>();
+    // move log
+
     static boolean[] king = {true, true}, queen = {true, true};
-    // white K, black K ...
+    // castling conditions for <side>[] = {white, black}
 
-
+    // reset when game restarts
     public static void resetCastling(){
         king[0] = king[1] = queen[0] = queen[1] = true;
     }
 
+    // when move is undone, go back to these castling conditions
     public static void undoCastle(boolean[] a, boolean[] b){
         king[0] = a[0];
         king[1] = a[1];
@@ -24,13 +37,16 @@ public class Board{
         queen[1] = b[1];
     }
 
+    // get kingside castling conditions
     public static boolean[] getKing(){
         return king;
     }
+    // get queenside casltine conditions
     public static boolean[] getQueen(){
         return queen;
     }
 
+    // copy castling conditions by value
     public static boolean[] copy(boolean[] arr){
         boolean[] temp = new boolean[2];
         temp[0] = arr[0];
@@ -38,7 +54,7 @@ public class Board{
         return temp;
     }
 
-    // 0 queen, 1 king
+    // remove the option of castling for player 'colour' and to the 'side' side
     public static void castleOp(int colour, boolean side){
         System.out.println("rm " + (colour == white? "white":"black") + " " + (side?"king":"queen"));
         if(!side)
@@ -47,6 +63,7 @@ public class Board{
             king[colour] = false;
     }
 
+    // initialize game
     public static void initGame(){
         for(int i = 1; i <= 8; i++)
             for(int j = 1; j <= 8; j++)
@@ -80,19 +97,23 @@ public class Board{
         resetCastling();
     }
 
-    public static void setPiece(int color, int x, int y, String choice){
-        board[x][y] = new Piece(choice, color, true);
+    // set the position x, y to this piece of 'colour' colour and 'type' type
+    public static void setPiece(int colour, int x, int y, String type){
+        board[x][y] = new Piece(type, colour, true);
     }
 
+    // get piece at x, y
     static Piece get(int x, int y){
         return board[x][y];
     }
 
+    // get who's turn it is
     public static int getTurn(){
         return turn;
     }
 
-    // first find king location
+    // find the king's location
+    // then check whether that location is being attacked
     static boolean isCheck(){
         int x = -1, y = -1;
         for(int i = 1; i <= 8; i++){
@@ -107,7 +128,7 @@ public class Board{
         return isCheck(x, y);
     }
 
-    // using location x, y
+    // check whether square x, y is being attacked
     static boolean isCheck(int x, int y){
         for(int i = 1; i <= 8; i++){
             for(int j = 1; j <= 8; j++){
@@ -118,9 +139,8 @@ public class Board{
         return false;
     }
 
-
+    // check whether current position is stalemate by trying every move
     static boolean isStalemate(){
-        // check making every move possible
         for(int i = 1; i <= 8; i++){
             for(int j = 1; j <= 8; j++){
                 if(board[i][j].colour == turn){
@@ -151,13 +171,14 @@ public class Board{
         return true;
     }
 
+    // clear the move log when game is reset
     public static void popAll(){
         while(!moveLog.isEmpty())
             moveLog.pop();
     }
 
+    // undo last move
     static void undo(){
-
         if(moveLog.isEmpty()){
             System.out.println("nothing to undo");
             return;
@@ -205,6 +226,7 @@ public class Board{
         }
     }
 
+    // method called when square x, y is clicked
     static void click(int x, int y){
 
         if(hasPieceSelected){
