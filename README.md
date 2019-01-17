@@ -20,7 +20,7 @@ Features of the application beyond playing chess include:
 
 - 'Random' board colour from pre-selected list of options
 
-- 'resign', 'draw', and 'undo' options
+- resign, draw, and undo options
 
 _____________________________________________________
 
