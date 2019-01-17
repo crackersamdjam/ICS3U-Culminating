@@ -6,15 +6,7 @@ Friday January 18, 2019
 
 Eric Pei and Misha Bagrianksi
 
-
-
-
-
-
-
-
-
-
+____________________________________________________________
 
 This application allows users to play chess against each other in accordance with the rules of chess
 
