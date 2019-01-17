@@ -18,9 +18,9 @@ Features of the application beyond playing chess include:
 
 - PGN file support
 
-- *'Random'* board colour from pre-selected list of options
+- 'Random' board colour from pre-selected list of options
 
-- 
+- 'resign', 'draw', and 'undo' options
 
 _____________________________________________________
 
