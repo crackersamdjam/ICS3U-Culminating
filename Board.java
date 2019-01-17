@@ -1,6 +1,5 @@
 package sample;
 import java.util.ArrayDeque;
-import java.util.HashMap;
 
 public class Board{
 
@@ -178,7 +177,7 @@ public class Board{
     }
 
     // return movelog as String
-    public static String printPgn(){
+    public static String getPgn(){
         String str = "";
         for(Move mv: moveLog){
             str = str + mv.pgnf;
@@ -256,7 +255,7 @@ public class Board{
             Main.setColour(pre.endX, pre.endY, "");
         }
 
-        Main.setText(printPgn());
+        Main.outputPgn(getPgn());
     }
 
     // method called when square x, y is clicked
@@ -396,6 +395,9 @@ public class Board{
                 }
             }
 
+            // ouput before checking for matae
+            Main.outputPgn(getPgn());
+
             if(isStalemate()){
 
                 // checkmate
@@ -412,9 +414,6 @@ public class Board{
             }
             Main.flip(turn);
             moveNum++;
-
-            Main.setText(printPgn());
-
         }
         else{
             if(board[x][y].type.equals("null")){
