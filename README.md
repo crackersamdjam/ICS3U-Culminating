@@ -7,7 +7,10 @@ Friday January 18, 2019
 Eric Pei and Misha Bagrianksi
 
 
-This application allows users to play chess against each other 
+
+This application allows users to play chess against each other in accordance with the rules of chess
+
+see: https://en.wikipedia.org/wiki/Rules_of_chess
 
 
 
