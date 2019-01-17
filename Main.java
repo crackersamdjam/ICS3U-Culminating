@@ -20,6 +20,22 @@ public class Main extends Application{
     static Button[][] btns = new Button[8][8];
     static GridPane board_button = new GridPane();
     static boolean drawOffered, offerDraw;
+    static  String color1 = "";
+    static  String color2 = "";
+
+    static final String colors1[] =  {"sienna", "peru", "dimgrey", "darkcyan", "steelblue"};
+    static final String colors2[] =  {"blanchedalmond", "moccasin", "tan", "white", "white"};
+    static int num;
+
+    public static void randomColor(){
+        int max = colors1.length;
+        int min = 0;
+        num = (int)(Math.random() * (max - min) + min);
+            color1 = colors1[num];
+            color2 = colors2[num];
+
+    }
+
 
     public static void setColour(int j, int i, String colour){
         i--; i = 7-i; j--;
@@ -28,13 +44,14 @@ public class Main extends Application{
         else if(colour.equals("red"))
             btns[i][j].setStyle("-fx-background-color: red;");
         else{
+
             String temp = ((i+j)&1) == 1 ? "darkkhaki" : "palegoldenrod";
             btns[i][j].setStyle("-fx-background-color: " + temp + ";");
         }
     }
     public static void rmColour(int j, int i){
         i--; i = 7-i; j--;
-        String colour = ((i+j)&1) == 1 ? "sienna" : "blanchedalmond";
+        String colour = ((i+j)&1) == 1 ? color1 : color2;
         btns[i][j].setStyle("-fx-background-color: " + colour + ";");
     }
     public static void clearColour(){
@@ -66,6 +83,7 @@ public class Main extends Application{
 
         //testing pgn format
         System.out.println(Board.printPgn());
+        randomColor();
 
         Board.popAll();
         for(int i = 0; i < 8; i++)
@@ -125,7 +143,7 @@ public class Main extends Application{
         for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
                 Button button_square = new Button();
-                String colour = ((i+j)&1) == 1 ? "sienna" : "blanchedalmond";
+                String colour = ((i+j)&1) == 1 ? color1 : color2;
                 button_square.setStyle("-fx-background-color: " + colour + ";");
                 button_square.setPrefWidth(80);
                 button_square.setPrefHeight(80);
