@@ -12,7 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import java.io.*;
 
 
 public class Main extends Application{
@@ -21,6 +20,22 @@ public class Main extends Application{
     static Button[][] btns = new Button[8][8];
     static GridPane board_button = new GridPane();
     static boolean drawOffered, offerDraw;
+    static  String color1 = "";
+    static  String color2 = "";
+
+    static final String colors1[] =  {"sienna", "peru", "dimgrey", "darkcyan", "steelblue"};
+    static final String colors2[] =  {"blanchedalmond", "moccasin", "tan", "white", "white"};
+    static int num;
+
+    public static void randomColor(){
+        int max = colors1.length;
+        int min = 0;
+        num = (int)(Math.random() * (max - min) + min);
+            color1 = colors1[num];
+            color2 = colors2[num];
+
+    }
+
 
     public static void setColour(int j, int i, String colour){
         i--; i = 7-i; j--;
@@ -29,13 +44,14 @@ public class Main extends Application{
         else if(colour.equals("red"))
             btns[i][j].setStyle("-fx-background-color: red;");
         else{
+
             String temp = ((i+j)&1) == 1 ? "darkkhaki" : "palegoldenrod";
             btns[i][j].setStyle("-fx-background-color: " + temp + ";");
         }
     }
     public static void rmColour(int j, int i){
         i--; i = 7-i; j--;
-        String colour = ((i+j)&1) == 1 ? "sienna" : "blanchedalmond";
+        String colour = ((i+j)&1) == 1 ? color1 : color2;
         btns[i][j].setStyle("-fx-background-color: " + colour + ";");
     }
     public static void clearColour(){
@@ -64,6 +80,10 @@ public class Main extends Application{
     }
 
     public static void initGame(){
+
+        //testing pgn format
+        System.out.println(Board.printPgn());
+        randomColor();
 
         Board.popAll();
         for(int i = 0; i < 8; i++)
@@ -113,42 +133,17 @@ public class Main extends Application{
     }
 
     static Label log = new Label("");
-    static File file;
-    static RandomAccessFile randomFile;
 
-    // outputs current pgn on screen and to file
-    public static void outputPgn(String str){
+    public static void setText(String str){
         log.setText(str);
-        try{
-            //empty file first
-            randomFile = new RandomAccessFile(file, "rw");
-            randomFile.setLength(0);
-            randomFile.close();
-
-            randomFile = new RandomAccessFile(file, "rw");
-            randomFile.writeChars(str + "\n");
-            randomFile.close();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException{
-
-        try{
-            file = new File("pgn.txt");
-            //randomFile = new RandomAccessFile(file, "rw");
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-
+    public void start(Stage primaryStage){
         for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
                 Button button_square = new Button();
-                String colour = ((i+j)&1) == 1 ? "sienna" : "blanchedalmond";
+                String colour = ((i+j)&1) == 1 ? color1 : color2;
                 button_square.setStyle("-fx-background-color: " + colour + ";");
                 button_square.setPrefWidth(80);
                 button_square.setPrefHeight(80);
@@ -162,9 +157,12 @@ public class Main extends Application{
         // everything is reset
         initGame();
 
+        TextField myTextField = new TextField();
         HBox hbox = new HBox(board_button);
         hbox.setPrefWidth(520);
         hbox.setPrefHeight(520);
+
+        final String[] color = {""};
 
         //undo button
         Button undoButton = new Button();
@@ -172,6 +170,7 @@ public class Main extends Application{
         undoButton.setPrefHeight(60);
         undoButton.setText("Undo");
         undoButton.setOnAction(event -> Board.undo());
+        //undoButton.setStyle("-fx-background-color: red;");
 
         Button resignButton = new Button();
         resignButton.setPrefWidth(100);
@@ -180,11 +179,23 @@ public class Main extends Application{
         resignButton.setOnAction(event -> Board.undo());
         resignButton.setOnAction(e -> {
             if (Board.getTurn() == 1)
-                displayEnd("White wins by resignation");
+                color[0] = "White";
             else
-                displayEnd("Black wins by resignation");
-
+                color[0] = "Black";
+            String text = color[0] + " wins by resignation";
+            displayEnd(text);
         });
+
+        Button darkButton = new Button();
+        darkButton.setPrefWidth(100);
+        darkButton.setPrefHeight(60);
+        darkButton.setText("Dark Mode");
+        darkButton.setOnAction(event ->
+                {
+                    color1 = "black";
+                    color2 = "grey";
+                }
+        );
 
         drawButton.setPrefWidth(100);
         drawButton.setPrefHeight(60);
@@ -197,7 +208,7 @@ public class Main extends Application{
                 displayEnd("Draw by agreement");
         });
 
-        VBox vbox_b = new VBox(undoButton, resignButton, drawButton);
+        VBox vbox_b = new VBox(undoButton, resignButton, drawButton, darkButton);
 
         // Times does not look nice
         //log.setFont(new Font("Times New Roman", 20));
@@ -352,19 +363,21 @@ public class Main extends Application{
         });
     }
 
-    public static void setPiece(int color, int y, int x, String type){
+    public static void setPiece(int color, int y, int x, String type) {
         x--; x = 7-x; y--;
 
         if(type.equals("null")){
             btns[x][y].setGraphic(null);
             return;
         }
+
         String colour_str = color == white? "white" : "black";
         Image image = new Image(Main.class.getResourceAsStream("assets/" + type + "_" + colour_str + ".png"));
         btns[x][y].setGraphic(new ImageView(image));
     }
 
-    public static void movePiece(int y, int x, int oldY, int oldX, String type, int color){
+    public static void movePiece(int y, int x, int oldY, int oldX, String type, int color) {
+
         x--; x = 7-x; y--; oldX--; oldX = 7-oldX; oldY--;
 
         String colour_str = color == white? "white" : "black";
@@ -375,5 +388,9 @@ public class Main extends Application{
 
     public static void main(String[] args){
         launch(args);
+    }
+
+    public static void exportPgn(){
+
     }
 }
