@@ -1,6 +1,4 @@
-# ICS3U Culminating
-
-Culminating project for ICS3U - Chess
+# Culminating project for ICS3U - Chess
 
 Friday January 18, 2019
 
@@ -20,7 +18,7 @@ Features of the application beyond playing chess include:
 
 - PGN file support
 
-- 'Random' board colour from pre-selected list of options
+- *'Random'* board colour from pre-selected list of options
 
 - 
 
