@@ -251,8 +251,8 @@ public class Board{
         Main.clearColour();
         if(!moveLog.isEmpty()){
             Move pre = moveLog.peekLast();
-            Main.setColour(pre.startX, pre.startY, "");
-            Main.setColour(pre.endX, pre.endY, "");
+            Main.setColour(pre.startX, pre.startY, "highlight");
+            Main.setColour(pre.endX, pre.endY, "highlight");
         }
 
         Main.outputPgn(getPgn());
@@ -261,11 +261,14 @@ public class Board{
     // method called when square x, y is clicked
     static void click(int x, int y){
 
+        char file = (char)(x+'a'-1);
+        System.out.println("clicked " + file + "" + y);
+
         if(hasPieceSelected){
             // moving to this square
 
             hasPieceSelected = false;
-            Main.setColour(oldX, oldY, "");
+            Main.setColour(oldX, oldY, "highlight");
 
             if(board[oldX][oldY].isCastle(oldX, oldY, x, y)){
                 if(x > oldX){
@@ -328,8 +331,8 @@ public class Board{
 
             Main.movePiece(x, y, oldX, oldY, board[x][y].type, board[x][y].colour);
             Main.clearColour();
-            Main.setColour(oldX, oldY, "");
-            Main.setColour(x, y, "");
+            Main.setColour(oldX, oldY, "highlight");
+            Main.setColour(x, y, "highlight");
             Main.cycleDraw();
             turn ^= 1;
 

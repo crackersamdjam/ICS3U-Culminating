@@ -35,8 +35,8 @@ public class Main extends Application{
     static  String color1 = "";
 
     // options for board colours
-    static final String colors1[] =  {"darkkhaki", "sienna", "peru", "dimgrey", "darkcyan", "steelblue"};
-    static final String colors2[] =  {"palegoldenrod", "blanchedalmond", "moccasin", "tan", "white", "white"};
+    static final String colors1[] =  {"sienna", "peru", "steelblue", "olivedrab"};
+    static final String colors2[] =  {"blanchedalmond", "moccasin", "white", "cornsilk"};
     // move number
     static int num;
 
@@ -51,10 +51,17 @@ public class Main extends Application{
     // if 'colour' is empty, sets to default
     public static void setColour(int j, int i, String colour){
         i--; i = 7-i; j--;
+
         if(colour.equals("green"))
             btns[i][j].setStyle("-fx-background-color: darkseagreen;");
+
         else if(colour.equals("red"))
             btns[i][j].setStyle("-fx-background-color: red;");
+
+        else if(colour.equals("highlight")){
+            colour = ((i+j)&1) == 1 ? "darkkhaki" : "palegoldenrod";
+            btns[i][j].setStyle("-fx-background-color: " + colour + ";");
+        }
         else{
             colour = ((i+j)&1) == 1 ? color1 : color2;
             btns[i][j].setStyle("-fx-background-color: " + colour + ";");
