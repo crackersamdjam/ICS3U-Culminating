@@ -265,7 +265,7 @@ public class Board{
             // moving to this square
 
             hasPieceSelected = false;
-            Main.rmColour(oldX, oldY);
+            Main.setColour(oldX, oldY, "");
 
             if(board[oldX][oldY].isCastle(oldX, oldY, x, y)){
                 if(x > oldX){
