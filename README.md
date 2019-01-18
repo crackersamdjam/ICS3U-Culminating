@@ -29,5 +29,3 @@ Other notes:
 List of colours https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor
 
 Piece Icons https://commons.wikimedia.org/wiki/Category:PNG_chess_pieces/Standard_transparent
-
-Link to Eric's journal https://docs.google.com/document/d/1VBjdVgAZIA1GNd57Uv3nD2iOw5VufVh21wIjSSwsDXA/edit
