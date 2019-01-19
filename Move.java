@@ -11,7 +11,7 @@ public class Move{
     String pgnf;
     // pgn format of move
 
-    // constructor
+    // #class
     public Move(int startX, int startY, int endX, int endY, Piece last, Piece current,
                 int num, int colour, boolean[] a, boolean[] b, int duplicate){
         this.startX = startX;

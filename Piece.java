@@ -1,6 +1,12 @@
 package sample;
 public class Piece{
 
+    static final boolean forceMove = false;
+    /*
+    #cheat mode
+    when forceMove is set to true, it forces all moves to go through
+     */
+
     static final int white = 0, black = 1;
     // colour of piece
 
@@ -13,21 +19,27 @@ public class Piece{
     boolean exist;
     // whether the piece exists
 
-    // Constructor
+    // #class
     public Piece(String type, int colour, boolean exist){
         this.type = type;
         this.colour = colour;
         this.exist = exist;
     }
 
-   // copies Piece by value
+    // copies Piece by value
+    // #methodinstance
     public Piece copy(){
         Piece ret = new Piece(type, colour, exist);
         return ret;
     }
 
     // whether the user tried to castle & can castle
+    // #methodinstance
     public boolean isCastle(int x, int y, int newX, int newY){
+
+        if(forceMove)
+            return true;
+
         if(!type.equals("King"))
             return false;
 
@@ -58,7 +70,11 @@ public class Piece{
     }
 
     // whether piece is able to make the move
+    // #methodinstance
     public boolean isValid(int x, int y, int newX, int newY){
+
+        if(forceMove)
+            return true;
 
         if(!exist)
             return false;
@@ -141,7 +157,11 @@ public class Piece{
 
     // whether the piece and make the move without jumping over other pieces
     // no need to check pawn, knight, king  - no way of jumping over other pieces
+    // #methodinstance
     public boolean isLegal(int x, int y, int newX, int newY){
+
+        if(forceMove)
+            return true;
 
         switch(this.type){
 

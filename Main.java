@@ -41,6 +41,8 @@ public class Main extends Application{
     static int num;
 
     // sets board to random colour
+    // #methodclass
+    // #random
     public static void randomColor(){
         num = (int)(Math.random()*colors1.length);
         color1 = colors1[num];
@@ -49,6 +51,7 @@ public class Main extends Application{
 
     // sets colour of square j, i to 'colour'
     // if 'colour' is empty, sets to default
+    // #methodclass
     public static void setColour(int j, int i, String colour){
         i--; i = 7-i; j--;
 
@@ -69,6 +72,7 @@ public class Main extends Application{
     }
 
     // resets colour of entire board
+    // #methodclass
     public static void clearColour(){
         for(int i = 1; i <= 8; i++)
             for(int j = 1; j <= 8; j++)
@@ -76,6 +80,7 @@ public class Main extends Application{
     }
 
     // flips the board
+    // #methodclass
     public static void flip(int colour){
         int value = colour == white ? 0 : 180;
         board_button.setRotate(value);
@@ -90,6 +95,7 @@ public class Main extends Application{
     static Button drawButton = new Button();
 
     // when turn changes, check if the previous player offered a draw
+    // #methodclass
     public static void cycleDraw(){
         drawButton.setStyle("fx-background-color: transparent;");
         drawOffered = offerDraw;
@@ -98,6 +104,7 @@ public class Main extends Application{
     }
 
     // initialize the game
+    // #methodclass
     public static void initGame(){
         randomColor();
         Board.popAll();
@@ -156,6 +163,7 @@ public class Main extends Application{
     static RandomAccessFile randomFile;
 
     // outputs current pgn on screen and to file
+    // #methodclass
     public static void outputPgn(String str){
         log.setText(str);
         try{
@@ -291,6 +299,7 @@ public class Main extends Application{
     }
 
     // display message 'text' on end screen
+    // #methodclass
     public static void displayEnd(String text){
 
         Label label = new Label(text);
@@ -325,6 +334,7 @@ public class Main extends Application{
 
     // display window for pawn promotion choices
     static String choice = "";
+    // #methodclass
     public static void windowPromote(int color, int x, int y){
 
         Label label = new Label("Choose piece to promote to:");
@@ -406,6 +416,7 @@ public class Main extends Application{
     }
 
     // sets the piece at y, x to type 'type' and colour 'colour
+    // #methodclass
     public static void setPiece(int colour, int y, int x, String type){
         x--; x = 7-x; y--;
 
@@ -420,6 +431,7 @@ public class Main extends Application{
 
     // move the piece at oldY, oldX --> y, x
     // type and colour of the piece is passed into function as well
+    // #methodclass
     public static void movePiece(int y, int x, int oldY, int oldX, String type, int colour){
         x--; x = 7-x; y--; oldX--; oldX = 7-oldX; oldY--;
 
@@ -429,6 +441,7 @@ public class Main extends Application{
         btns[oldX][oldY].setGraphic(null);
     }
 
+    // #main
     public static void main(String[] args){
         launch(args);
     }
