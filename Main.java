@@ -177,6 +177,8 @@ public class Main extends Application{
             randomFile.close();
         }
         catch(Exception e){
+            // #error
+            // prints stack trace
             e.printStackTrace();
         }
     }
@@ -188,6 +190,8 @@ public class Main extends Application{
             file = new File("pgn.txt");
         }
         catch(Exception e){
+            // #error
+            // prints stack trace
             e.printStackTrace();
         }
 
@@ -232,20 +236,6 @@ public class Main extends Application{
 
         });
 
-        // dark mode not yet supported
-        /*
-        Button darkButton = new Button();
-        darkButton.setPrefWidth(100);
-        darkButton.setPrefHeight(60);
-        darkButton.setText("Dark Mode");
-        darkButton.setOnAction(e -> {
-                    color1 = "black";
-                    color2 = "grey";
-                    clearColour();
-                }
-        );
-        */
-
         drawButton.setPrefWidth(100);
         drawButton.setPrefHeight(60);
         drawButton.setText("Offer draw");
@@ -258,8 +248,6 @@ public class Main extends Application{
         });
 
         VBox vbox_b = new VBox(undoButton, resignButton, drawButton);
-        // dark mode in development
-        //vbox_b.getChildren().add(darkButton);
 
         ScrollPane sp = new ScrollPane();
 

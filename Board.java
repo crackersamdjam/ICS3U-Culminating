@@ -27,6 +27,7 @@ public class Board{
     // castling conditions for <side>[] = {white, black}
 
     // reset when game restarts
+    // #methodclass
     public static void resetCastling(){
         king[0] = king[1] = queen[0] = queen[1] = true;
     }
@@ -230,6 +231,8 @@ public class Board{
     // #methodclass
     static void undo(){
         if(moveLog.isEmpty()){
+            // #error
+            // feedback in case of bugs
             System.out.println("nothing to undo");
             return;
         }
@@ -284,6 +287,8 @@ public class Board{
     // #methodclass
     static void click(int x, int y){
 
+        // #error
+        // feedback to debug
         char file = (char)(x+'a'-1);
         System.out.println("clicked " + file + "" + y);
 
@@ -312,7 +317,8 @@ public class Board{
             else{
                 // check if valid move
                 if(!board[oldX][oldY].isValid(oldX, oldY, x, y)){
-                    //why is this running after successful move
+                    // #error
+                    // feedback
                     System.out.println("Invalid move, piece has been deselected");
                     Main.setColour(oldX, oldY, "");
                     return;
@@ -320,12 +326,15 @@ public class Board{
 
                 // check if move is legal (jumps over pieces)
                 if(!board[oldX][oldY].isLegal(oldX, oldY, x, y)){
+                    // #error
+                    // feedback
                     System.out.println("Illegal move");
                     Main.setColour(oldX, oldY, "");
                     return;
                 }
             }
 
+            // whether or not pgn needs to consider starting file or rank
             int duplicate = reachable(x, y, board[oldX][oldY].type, board[oldX][oldY].colour, oldX, oldY);
 
             // move the piece
@@ -336,6 +345,8 @@ public class Board{
 
             // check if move results in check
             if(isCheck()){
+                // #error
+                // feedback
                 System.out.println("Results in check, move reset");
 
                 // reset pieces
@@ -447,10 +458,14 @@ public class Board{
         }
         else{
             if(board[x][y].type.equals("null")){
+                // #error
+                // feedback
                 System.out.println("Nothing to select");
                 return;
             }
             if(board[x][y].colour != turn){
+                // #error
+                // feedback
                 System.out.println("Wrong coloured piece");
                 return;
             }
