@@ -30,14 +30,20 @@ public class Main extends Application{
     static boolean drawOffered, offerDraw;
 
     // colour of dark squares
+    // #variable
     static  String color2 = "";
+
     // colour of light squares
+    // #variable
     static  String color1 = "";
 
     // options for board colours
+    //
     static final String colors1[] =  {"sienna", "peru", "steelblue", "olivedrab"};
     static final String colors2[] =  {"blanchedalmond", "moccasin", "white", "cornsilk"};
+
     // move number
+    // #variable
     static int num;
 
     // sets board to random colour
@@ -55,16 +61,20 @@ public class Main extends Application{
     public static void setColour(int j, int i, String colour){
         i--; i = 7-i; j--;
 
+        // #condition
         if(colour.equals("green"))
             btns[i][j].setStyle("-fx-background-color: darkseagreen;");
 
+        // #condition
         else if(colour.equals("red"))
             btns[i][j].setStyle("-fx-background-color: red;");
 
+        // #condition
         else if(colour.equals("highlight")){
             colour = ((i+j)&1) == 1 ? "darkkhaki" : "palegoldenrod";
             btns[i][j].setStyle("-fx-background-color: " + colour + ";");
         }
+        // #condition
         else{
             colour = ((i+j)&1) == 1 ? color1 : color2;
             btns[i][j].setStyle("-fx-background-color: " + colour + ";");
@@ -74,7 +84,11 @@ public class Main extends Application{
     // resets colour of entire board
     // #methodclass
     public static void clearColour(){
+
+        // #loop
         for(int i = 1; i <= 8; i++)
+
+            // #loop
             for(int j = 1; j <= 8; j++)
                 setColour(i, j, "");
     }
@@ -212,6 +226,7 @@ public class Main extends Application{
         // everything is reset
         initGame();
 
+        // hbox consisting of gridpane with buttons
         HBox hbox = new HBox(board_button);
         hbox.setPrefWidth(520);
         hbox.setPrefHeight(520);
@@ -223,6 +238,7 @@ public class Main extends Application{
         undoButton.setText("Undo");
         undoButton.setOnAction(event -> Board.undo());
 
+        // resignation button
         Button resignButton = new Button();
         resignButton.setPrefWidth(100);
         resignButton.setPrefHeight(60);
@@ -236,6 +252,7 @@ public class Main extends Application{
 
         });
 
+        // offer draw button
         drawButton.setPrefWidth(100);
         drawButton.setPrefHeight(60);
         drawButton.setText("Offer draw");
@@ -247,20 +264,22 @@ public class Main extends Application{
                 displayEnd("Draw by agreement");
         });
 
+        // vbox with 3 aforementioned buttons
         VBox vbox_b = new VBox(undoButton, resignButton, drawButton);
 
+        // scrollpane for move log
         ScrollPane sp = new ScrollPane();
-
         sp.setContent(log);
         sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-
         sp.setPrefWidth(240);
 
+        // set spacing between elements of stage
         vbox_b.setSpacing(10);
         hbox.setSpacing(15);
-
         hbox.setSpacing(10);
+
+        // add buttons and scrollpane to hbox
         hbox.getChildren().addAll(vbox_b, sp);
 
         for(int i = 0; i < 8; i++){
@@ -268,6 +287,7 @@ public class Main extends Application{
             board_button.getRowConstraints().add(new RowConstraints(80, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true));
         }
 
+        // create scene consisting of main hbox
         Scene scene = new Scene(hbox, 1000, 640);
         primaryStage.setTitle("Chess");
         primaryStage.setResizable(false);
@@ -287,6 +307,7 @@ public class Main extends Application{
     }
 
     // display message 'text' on end screen
+    // here, displays end of game due to <text> on a new window (pop-up)
     // #methodclass
     public static void displayEnd(String text){
 
@@ -300,7 +321,6 @@ public class Main extends Application{
 
         VBox vbox = new VBox(label, restartButton);
         vbox.setAlignment(Pos.CENTER);
-        //vbox.setPadding(new Insets(10, 50, 50, 50));
         vbox.setSpacing(10);
 
         Scene secondScene = new Scene(vbox, 400, 150);
@@ -320,15 +340,15 @@ public class Main extends Application{
         });
     }
 
-    // display window for pawn promotion choices
     static String choice = "";
+    // display window for pawn promotion choices
     // #methodclass
     public static void windowPromote(int color, int x, int y){
 
         Label label = new Label("Choose piece to promote to:");
         label.setFont(new Font("Times New Roman", 20));
 
-
+        // initialize 4 buttons with different icons depending on player who is promoting
         Button Queen = new Button();
         Button Rook = new Button();
         Button Bishop = new Button();
@@ -364,6 +384,7 @@ public class Main extends Application{
 
         newWindow.show();
 
+        // setting the piece type to that which was selected
         Queen.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent e){
