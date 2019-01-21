@@ -26,6 +26,8 @@ _____________________________________________________
 
 Other notes:
 
+test.txt goes in the project folder
+
 List of colours https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor
 
 Piece Icons https://commons.wikimedia.org/wiki/Category:PNG_chess_pieces/Standard_transparent
