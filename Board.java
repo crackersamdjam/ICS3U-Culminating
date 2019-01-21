@@ -1,6 +1,8 @@
 package sample;
 import java.util.ArrayDeque;
 
+// #Misha #Eric
+
 public class Board{
 
     static final int white = 0, black = 1;
@@ -75,7 +77,7 @@ public class Board{
     public static void initGame(){
         for(int i = 1; i <= 8; i++)
             for(int j = 1; j <= 8; j++)
-               board[i][j] = empty;
+                board[i][j] = empty;
         // #object
         board[1][1] = new Piece("Rook", white, true);
         board[2][1] = new Piece("Knight", white, true);

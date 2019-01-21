@@ -14,6 +14,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.io.*;
 
+// #Misha
+// #Eric
 
 public class Main extends Application{
 
@@ -65,11 +67,11 @@ public class Main extends Application{
         if(colour.equals("green"))
             btns[i][j].setStyle("-fx-background-color: darkseagreen;");
 
-        // #condition
+            // #condition
         else if(colour.equals("red"))
             btns[i][j].setStyle("-fx-background-color: red;");
 
-        // #condition
+            // #condition
         else if(colour.equals("highlight")){
             colour = ((i+j)&1) == 1 ? "darkkhaki" : "palegoldenrod";
             btns[i][j].setStyle("-fx-background-color: " + colour + ";");

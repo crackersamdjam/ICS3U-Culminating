@@ -1,4 +1,7 @@
 package sample;
+
+// #Eric
+
 public class Piece{
 
     static final boolean forceMove = false;
@@ -287,7 +290,7 @@ public class Piece{
                     }
                 }
                 break;
-                default:;
+            default:;
         }
         return true;
     }
