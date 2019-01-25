@@ -59,9 +59,6 @@ public class Move{
                     break;
                 default:
                     // #error
-                    // should not happen
-                    assert(true);
-                    //throws exception if happens
                     pgnf = pgnf + "error";
                     break;
             }
