@@ -5,24 +5,18 @@ package sample;
 public class Piece{
 
     static final boolean forceMove = false;
-    /*
-    #cheat mode
-    when forceMove is set to true, it forces all moves to go through
-     */
+    // when forceMove is set to true, it forces all moves to go through
 
     static final int white = 0, black = 1;
+    int colour;
     // colour of piece
 
     String type;
     // type of piece
 
-    int colour;
-    // white = 0, black = 1     this is done so that numbers can be XOR'd
-
     boolean exist;
     // whether the piece exists
 
-    // #class
     public Piece(String type, int colour, boolean exist){
         this.type = type;
         this.colour = colour;
@@ -30,14 +24,12 @@ public class Piece{
     }
 
     // copies Piece by value
-    // #methodinstance
     public Piece copy(){
         Piece ret = new Piece(type, colour, exist);
         return ret;
     }
 
     // whether the user tried to castle & can castle
-    // #methodinstance
     public boolean isCastle(int x, int y, int newX, int newY){
 
         if(forceMove)
@@ -52,7 +44,7 @@ public class Piece{
 
             // castle queenside
             if(newX == 3 && Board.getQueen()[colour]){
-                //must be empty between rook and king
+                // must be empty between rook and king
                 for(int i = 2; i < 5; i++){
                     if(Board.get(i, ty).exist)
                         return false;
@@ -62,6 +54,7 @@ public class Piece{
 
             // castle kingside
             else if(newX == 7 && Board.getKing()[colour]){
+                // must be empty between rook and king
                 for(int i = 6; i <= 7; i++){
                     if(Board.get(i, ty).exist)
                         return false;
@@ -73,7 +66,6 @@ public class Piece{
     }
 
     // whether piece is able to make the move
-    // #methodinstance
     public boolean isValid(int x, int y, int newX, int newY){
 
         if(forceMove)
@@ -85,6 +77,7 @@ public class Piece{
         // same spot
         if(newX == x && newY == y)
             return false;
+
         // can not capture own piece
         if(Board.get(newX, newY).colour == this.colour)
             return false;
@@ -118,34 +111,34 @@ public class Piece{
             case "Pawn":
                 if(colour == white){
 
-                    //normal move
+                    // normal move
                     if(newX == x && newY == y+1 && !Board.get(x, y+1).exist)
                         return true;
 
-                    //first move 2 squares
+                    // first move 2 squares
                     if(newX == x && y == 2 && newY == 4 && !Board.get(x, 4).exist && !Board.get(x, 3).exist){
                         //set en passant
                         return true;
                     }
 
-                    //capture
+                    // capture
                     if(Math.abs(newX-x) == 1 && newY == y+1){
                         if(Board.get(newX, newY).colour == black)
                             return true;
                     }
                 }
                 else{
-                    //normal move
+                    // normal move
                     if(newX == x && newY == y-1 && !Board.get(x, y-1).exist)
                         return true;
 
-                    //first move 2 squares
+                    // first move 2 squares
                     if(newX == x && y == 7 && newY == 5 && !Board.get(x, 5).exist && !Board.get(x, 6).exist){
-                        //set en passant
+                        // set en passant
                         return true;
                     }
 
-                    //capture
+                    // capture
                     if(Math.abs(newX-x) == 1 && newY == y-1){
                         if(Board.get(newX, newY).colour == white)
                             return true;
@@ -160,7 +153,6 @@ public class Piece{
 
     // whether the piece and make the move without jumping over other pieces
     // no need to check pawn, knight, king  - no way of jumping over other pieces
-    // #methodinstance
     public boolean isLegal(int x, int y, int newX, int newY){
 
         if(forceMove)

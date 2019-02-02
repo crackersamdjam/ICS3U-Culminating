@@ -1,41 +1,31 @@
 package sample;
 import java.util.ArrayDeque;
 
-// #Misha #Eric
-
 public class Board{
 
     static final int white = 0, black = 1;
-    // player colours
 
     static Piece[][] board = new Piece[9][9];
-    // board
 
     static boolean hasPieceSelected, moveCastle;
     // whether a piece has been selected; whether use intended to castle
 
     static int oldX, oldY, turn, moveNum;
-    // previous x, y; who's turn; move number
+    // previous x, y, who's turn, move number
 
     static Piece empty = new Piece("null", -1, false);
-    // empty piece
-    // #object
 
     static ArrayDeque<Move> moveLog = new ArrayDeque<>();
-    // move log
-    // #arraylist
 
     static boolean[] king = {true, true}, queen = {true, true};
     // castling conditions for <side>[] = {white, black}
 
     // reset when game restarts
-    // #methodclass
     public static void resetCastling(){
         king[0] = king[1] = queen[0] = queen[1] = true;
     }
 
     // when move is undone, go back to these castling conditions
-    // #methodclass
     public static void undoCastle(boolean[] a, boolean[] b){
         king[0] = a[0];
         king[1] = a[1];
@@ -44,18 +34,16 @@ public class Board{
     }
 
     // get kingside castling conditions
-    // #methodclass
     public static boolean[] getKing(){
         return king;
     }
+
     // get queenside casltine conditions
-    // #methodclass
     public static boolean[] getQueen(){
         return queen;
     }
 
     // copy castling conditions by value
-    // #methodclass
     public static boolean[] copy(boolean[] arr){
         boolean[] temp = new boolean[2];
         temp[0] = arr[0];
@@ -64,7 +52,6 @@ public class Board{
     }
 
     // remove the option of castling for player 'colour' and to the 'side' side
-    // #methodclass
     public static void castleOp(int colour, boolean side){
         if(!side)
             queen[colour] = false;
@@ -73,12 +60,11 @@ public class Board{
     }
 
     // initialize game
-    // #methodclass
     public static void initGame(){
         for(int i = 1; i <= 8; i++)
             for(int j = 1; j <= 8; j++)
                 board[i][j] = empty;
-        // #object
+
         board[1][1] = new Piece("Rook", white, true);
         board[2][1] = new Piece("Knight", white, true);
         board[3][1] = new Piece("Bishop", white, true);
@@ -108,28 +94,20 @@ public class Board{
         resetCastling();
     }
 
-    // set the position x, y to this piece of 'colour' colour and 'type' type
-    // #methodclass
     public static void setPiece(int colour, int x, int y, String type){
-        // #object
         board[x][y] = new Piece(type, colour, true);
     }
 
-    // get piece at x, y
-    // #methodclass
     static Piece get(int x, int y){
         return board[x][y];
     }
 
-    // get who's turn it is
-    // #methodclass
     public static int getTurn(){
         return turn;
     }
 
     // find the king's location
     // then check whether that location is being attacked
-    // #methodclass1
     static boolean isCheck(){
         int x = -1, y = -1;
         for(int i = 1; i <= 8; i++){
@@ -145,7 +123,6 @@ public class Board{
     }
 
     // check whether square x, y is being attacked
-    // #methodclass
     static boolean isCheck(int x, int y){
         for(int i = 1; i <= 8; i++){
             for(int j = 1; j <= 8; j++){
@@ -157,7 +134,6 @@ public class Board{
     }
 
     // check whether current position is stalemate by trying every move
-    // #methodclass
     static boolean isStalemate(){
         for(int i = 1; i <= 8; i++){
             for(int j = 1; j <= 8; j++){
@@ -190,14 +166,12 @@ public class Board{
     }
 
     // clear the move log when game is reset
-    // #methodclass
     public static void popAll(){
         while(!moveLog.isEmpty())
             moveLog.pop();
     }
 
     // return movelog as String
-    // #methodclass
     public static String getPgn(){
         String str = "";
         for(Move mv: moveLog){
@@ -208,7 +182,6 @@ public class Board{
 
     // whether square x, y is reachable by another piece with same type and colour
     // this is used when deciding whether extra number or letter is required for pgn format
-    // #methodclass
     public static int reachable(int x, int y, String type, int colour, int oldX, int oldY){
         for(int i = 1; i <= 8; i++){
             for(int j = 1; j <= 8; j++){
@@ -230,19 +203,16 @@ public class Board{
     }
 
     // undo last move
-    // #methodclass
     static void undo(){
+
         if(moveLog.isEmpty()){
-            // #error
-            // feedback in case of bugs
             System.out.println("nothing to undo");
             return;
         }
-
+        //remove previous draw offers
         Main.cycleDraw();
         Main.cycleDraw();
 
-        // #object
         Move mv = moveLog.peekLast();
         moveLog.pollLast();
 
@@ -276,7 +246,6 @@ public class Board{
 
         Main.clearColour();
         if(!moveLog.isEmpty()){
-            // #object
             Move pre = moveLog.peekLast();
             Main.setColour(pre.startX, pre.startY, "highlight");
             Main.setColour(pre.endX, pre.endY, "highlight");
@@ -286,10 +255,8 @@ public class Board{
     }
 
     // method called when square x, y is clicked
-    // #methodclass
     static void click(int x, int y){
 
-        // #error
         // feedback to debug
         char file = (char)(x+'a'-1);
         System.out.println("clicked " + file + "" + y);
@@ -319,8 +286,6 @@ public class Board{
             else{
                 // check if valid move
                 if(!board[oldX][oldY].isValid(oldX, oldY, x, y)){
-                    // #error
-                    // feedback
                     System.out.println("Invalid move, piece has been deselected");
                     Main.setColour(oldX, oldY, "");
                     return;
@@ -328,8 +293,6 @@ public class Board{
 
                 // check if move is legal (jumps over pieces)
                 if(!board[oldX][oldY].isLegal(oldX, oldY, x, y)){
-                    // #error
-                    // feedback
                     System.out.println("Illegal move");
                     Main.setColour(oldX, oldY, "");
                     return;
@@ -340,15 +303,12 @@ public class Board{
             int duplicate = reachable(x, y, board[oldX][oldY].type, board[oldX][oldY].colour, oldX, oldY);
 
             // move the piece
-            // #object
             Piece temp = board[x][y].copy();
             board[x][y] = board[oldX][oldY].copy();
             board[oldX][oldY] = empty;
 
             // check if move results in check
             if(isCheck()){
-                // #error
-                // feedback
                 System.out.println("Results in check, move reset");
 
                 // reset pieces
@@ -358,7 +318,6 @@ public class Board{
             }
 
             // push to move log
-            // #object
             moveLog.addLast(new Move(oldX, oldY, x, y, temp, board[x][y], moveNum, turn, copy(getKing()), copy(getQueen()), duplicate));
 
             // promotion
@@ -379,9 +338,9 @@ public class Board{
             // if castle, move rook as well
             if(moveCastle){
                 if(turn != white){
-                    //white
+                    // white
                     if(x == 3){
-                        //queenside
+                        // queenside
                         board[4][1] = board[1][1].copy();
                         board[1][1] = empty;
                         Main.movePiece(4, 1, 1, 1, "Rook", white);
@@ -393,7 +352,7 @@ public class Board{
                     }
                 }
                 else{
-                    //black
+                    // black
                     if(x == 3){
                         board[4][8] = board[1][8].copy();
                         board[1][8] = empty;
@@ -438,7 +397,7 @@ public class Board{
                 }
             }
 
-            // ouput before checking for matae
+            // ouput before checking for mate
             Main.outputPgn(getPgn());
 
             if(isStalemate()){
@@ -460,14 +419,10 @@ public class Board{
         }
         else{
             if(board[x][y].type.equals("null")){
-                // #error
-                // feedback
                 System.out.println("Nothing to select");
                 return;
             }
             if(board[x][y].colour != turn){
-                // #error
-                // feedback
                 System.out.println("Wrong coloured piece");
                 return;
             }

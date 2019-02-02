@@ -1,20 +1,19 @@
 package sample;
 
-// #Eric
-
 public class Move{
 
     int startX, startY, endX, endY, num, colour;
     // starting x, y; ending x, y; move number; colour of piece moved
+
     Piece last;
     // Piece of piece moved
+
     boolean[] a, b;
     // castling conditions (see Board.java)
 
     String pgnf;
-    // pgn format of move
+    // pgn format of current move
 
-    // #class
     public Move(int startX, int startY, int endX, int endY, Piece last, Piece current,
                 int num, int colour, boolean[] a, boolean[] b, int duplicate){
         this.startX = startX;
@@ -58,19 +57,16 @@ public class Move{
                 case "Pawn":
                     break;
                 default:
-                    // #error
                     pgnf = pgnf + "error";
                     break;
             }
-
-            if(duplicate == 1){
-                //file
+            //file
+            if(duplicate == 1)
                 pgnf = pgnf + (char)(startX+'a'-1);
-            }
-            else if(duplicate == 2){
-                //rank
+
+            //rank
+            else if(duplicate == 2)
                 pgnf = pgnf + startY;
-            }
 
             // if capture, add 'x'
             if(last.exist)

@@ -14,43 +14,28 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.io.*;
 
-// #Misha
-// #Eric
 
 public class Main extends Application{
 
-    // player colours
     static final int white = 0, black = 1;
 
-    // this is the board that detects clicks and displays pieces
     static Button[][] btns = new Button[8][8];
 
-    // holds buttons
     static GridPane board_button = new GridPane();
 
-    // booleans to store whether player offered draw, opponent offered draw last move
     static boolean drawOffered, offerDraw;
 
-    // colour of dark squares
-    // #variable
-    static  String color2 = "";
-
-    // colour of light squares
-    // #variable
-    static  String color1 = "";
+    // colour of dark, light squares
+    static String color2 = "", color1 = "";
 
     // options for board colours
-    //
     static final String colors1[] =  {"sienna", "peru", "steelblue", "olivedrab"};
     static final String colors2[] =  {"blanchedalmond", "moccasin", "white", "cornsilk"};
 
     // move number
-    // #variable
     static int num;
 
     // sets board to random colour
-    // #methodclass
-    // #random
     public static void randomColor(){
         num = (int)(Math.random()*colors1.length);
         color1 = colors1[num];
@@ -59,24 +44,19 @@ public class Main extends Application{
 
     // sets colour of square j, i to 'colour'
     // if 'colour' is empty, sets to default
-    // #methodclass
     public static void setColour(int j, int i, String colour){
         i--; i = 7-i; j--;
 
-        // #condition
         if(colour.equals("green"))
             btns[i][j].setStyle("-fx-background-color: darkseagreen;");
 
-            // #condition
         else if(colour.equals("red"))
             btns[i][j].setStyle("-fx-background-color: red;");
 
-            // #condition
         else if(colour.equals("highlight")){
             colour = ((i+j)&1) == 1 ? "darkkhaki" : "palegoldenrod";
             btns[i][j].setStyle("-fx-background-color: " + colour + ";");
         }
-        // #condition
         else{
             colour = ((i+j)&1) == 1 ? color1 : color2;
             btns[i][j].setStyle("-fx-background-color: " + colour + ";");
@@ -84,19 +64,13 @@ public class Main extends Application{
     }
 
     // resets colour of entire board
-    // #methodclass
     public static void clearColour(){
-
-        // #loop
         for(int i = 1; i <= 8; i++)
-
-            // #loop
             for(int j = 1; j <= 8; j++)
                 setColour(i, j, "");
     }
 
     // flips the board
-    // #methodclass
     public static void flip(int colour){
         int value = colour == white ? 0 : 180;
         board_button.setRotate(value);
@@ -111,7 +85,6 @@ public class Main extends Application{
     static Button drawButton = new Button();
 
     // when turn changes, check if the previous player offered a draw
-    // #methodclass
     public static void cycleDraw(){
         drawButton.setStyle("fx-background-color: transparent;");
         drawOffered = offerDraw;
@@ -120,7 +93,6 @@ public class Main extends Application{
     }
 
     // initialize the game
-    // #methodclass
     public static void initGame(){
         randomColor();
         Board.popAll();
@@ -171,15 +143,14 @@ public class Main extends Application{
         Board.initGame();
     }
 
-    // log --> movelog
-    // file --> "pgn.txt" in project folder
+    // log = movelog
+    // file = "pgn.txt" in project folder
     // RAF to edit file
     static Label log = new Label("");
     static File file;
     static RandomAccessFile randomFile;
 
     // outputs current pgn on screen and to file
-    // #methodclass
     public static void outputPgn(String str){
         log.setText(str);
         try{
@@ -193,8 +164,6 @@ public class Main extends Application{
             randomFile.close();
         }
         catch(Exception e){
-            // #error
-            // prints stack trace
             e.printStackTrace();
         }
     }
@@ -206,8 +175,6 @@ public class Main extends Application{
             file = new File("pgn.txt");
         }
         catch(Exception e){
-            // #error
-            // prints stack trace
             e.printStackTrace();
         }
 
@@ -233,7 +200,7 @@ public class Main extends Application{
         hbox.setPrefWidth(520);
         hbox.setPrefHeight(520);
 
-        //undo button
+        // undo button
         Button undoButton = new Button();
         undoButton.setPrefWidth(100);
         undoButton.setPrefHeight(60);
@@ -266,7 +233,7 @@ public class Main extends Application{
                 displayEnd("Draw by agreement");
         });
 
-        // vbox with 3 aforementioned buttons
+        // vbox with buttons
         VBox vbox_b = new VBox(undoButton, resignButton, drawButton);
 
         // scrollpane for move log
@@ -310,7 +277,6 @@ public class Main extends Application{
 
     // display message 'text' on end screen
     // here, displays end of game due to <text> on a new window (pop-up)
-    // #methodclass
     public static void displayEnd(String text){
 
         Label label = new Label(text);
@@ -344,7 +310,6 @@ public class Main extends Application{
 
     static String choice = "";
     // display window for pawn promotion choices
-    // #methodclass
     public static void windowPromote(int color, int x, int y){
 
         Label label = new Label("Choose piece to promote to:");
@@ -427,7 +392,6 @@ public class Main extends Application{
     }
 
     // sets the piece at y, x to type 'type' and colour 'colour
-    // #methodclass
     public static void setPiece(int colour, int y, int x, String type){
         x--; x = 7-x; y--;
 
@@ -442,7 +406,6 @@ public class Main extends Application{
 
     // move the piece at oldY, oldX --> y, x
     // type and colour of the piece is passed into function as well
-    // #methodclass
     public static void movePiece(int y, int x, int oldY, int oldX, String type, int colour){
         x--; x = 7-x; y--; oldX--; oldX = 7-oldX; oldY--;
 
@@ -452,7 +415,6 @@ public class Main extends Application{
         btns[oldX][oldY].setGraphic(null);
     }
 
-    // #main
     public static void main(String[] args){
         launch(args);
     }
